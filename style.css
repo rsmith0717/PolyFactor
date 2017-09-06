@@ -1,0 +1,12 @@
+body {
+    background: cornflowerblue;
+}
+
+h1 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.input-group {
+    text-align: center;
+}
