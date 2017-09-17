@@ -16,3 +16,13 @@ function bubbleSort(items, actual) {
         }
     }
 }
+
+function GCF(array1, array2) {
+    var gcf = 0;
+    array1.forEach(function(element) {
+        if(array2.includes(element)) {
+            gcf = parseInt(element);
+        }
+    });
+    return gcf;
+}

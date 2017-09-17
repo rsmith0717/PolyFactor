@@ -1,4 +1,4 @@
-// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3
+// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3
 var button= document.getElementById('submit');
 var polynomial = '';
 var arr = [];
@@ -74,6 +74,9 @@ button.onclick= function(){
 
   console.log(polyfacts.toString());    // factors of the polynomial coefficient
   console.log(constfacts.toString());   // factors of the constant
+
+  gcf = GCF(polyfacts, constfacts);
+  console.log(gcf);
   
 
 }
