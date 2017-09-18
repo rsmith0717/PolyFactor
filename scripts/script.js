@@ -1,18 +1,18 @@
-// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3
+// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3
 var button= document.getElementById('submit');
 var polynomial = '';
 var arr = [];
 button.onclick= function(){
     polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
     console.log(polynomial);
-    arr = polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi);
+    arr = polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
     console.log(arr.toString());
     
     var polynomials = []
     var constants = []
     //var reg = new RegExp('^(\-?|\+?)\d*$');    
     
-    arr.forEach(function(term){
+    arr.forEach(function(term){ //                      seperates the constant from the terms containing variables
         var constant = /^\d+$/.test(term);  
         var constant = /^[-|+]?\d*\.?\d+$/.test(term);  
         if(constant == true) {
@@ -26,7 +26,7 @@ button.onclick= function(){
       console.log(constants.toString());
 
       var sortpolys = []
-      polynomials.forEach(function(poly){
+      polynomials.forEach(function(poly){   // splits the exponent from the terms containing variables
         var power = 0;
         if(poly.includes('^')) {
             power = parseInt(poly.split('^')[1]);            
@@ -37,7 +37,46 @@ button.onclick= function(){
       })
       console.log(sortpolys.toString());      
 
-      bubbleSort(sortpolys, polynomials);
+      bubbleSort(sortpolys, polynomials); // sorts the powers in descending order and the corresponding term as well
       polynomials.reverse();
       console.log(polynomials.toString());
+
+
+      var zerotest = [];
+      console.log(polynomials[0]);
+      //var leadingterm = polynomials[0].split(/[a-zA-Z]+|[0-9]+/g); 
+      var leadingterm = polynomials[0].split(/[a-zA-Z](.+)/)[0];
+      console.log(leadingterm);
+      zerotest.push(leadingterm);
+      if(constants[0] != null) {
+        zerotest.push(constants[0]);        
+      }
+      console.log(zerotest.toString());
+
+      polyfacts = [];
+      constfacts = [];
+
+      factoree1 = parseInt(zerotest[0]); // the leading coefficient of greatest power polynomial
+      factoree2 = parseInt(zerotest[1]); // the constant
+      
+
+      for(x = 0; x <= factoree1; x++) {
+            if(factoree1 % x == 0) {
+                polyfacts.push(x)
+            }
+      }
+
+      for(x = 0; x <= factoree2; x++) {
+        if(factoree2 % x == 0) {
+            constfacts.push(x)
+        }
+  }
+
+  console.log(polyfacts.toString());    // factors of the polynomial coefficient
+  console.log(constfacts.toString());   // factors of the constant
+
+  gcf = GCF(polyfacts, constfacts);
+  console.log(gcf);
+  
+
 }
