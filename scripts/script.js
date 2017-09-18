@@ -41,7 +41,8 @@ button.onclick= function(){
       polynomials.reverse();
       console.log(polynomials.toString());
 
-
+      descartes(polynomial);            // evaluates the polynomial at f(x) and f(-x) to determine number of possible
+                                        // positive and negative zeros
       var zerotest = [];
       console.log(polynomials[0]);
       //var leadingterm = polynomials[0].split(/[a-zA-Z]+|[0-9]+/g); 
