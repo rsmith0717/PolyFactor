@@ -11,31 +11,15 @@ button.onclick= function(){
     var polynomials = []
     var constants = []
     //var reg = new RegExp('^(\-?|\+?)\d*$');    
-    
-    arr.forEach(function(term){ //                      seperates the constant from the terms containing variables
-        var constant = /^\d+$/.test(term);  
-        var constant = /^[-|+]?\d*\.?\d+$/.test(term);  
-        if(constant == true) {
-            constants.push(term);
-        } else {
-            polynomials.push(term); 
-        }    
-      });
+
+    polyorconst(arr,constants,polynomials)
     
       console.log(polynomials.toString());
       console.log(constants.toString());
 
-      var sortpolys = []
-      polynomials.forEach(function(poly){   // splits the exponent from the terms containing variables
-        var power = 0;
-        if(poly.includes('^')) {
-            power = parseInt(poly.split('^')[1]);            
-        } else {
-            power = 1;
-        }
-        sortpolys.push(power);
-      })
-      console.log(sortpolys.toString());      
+      var sortpolysresults = []
+      sortpolys(polynomials,sortpolysresults);
+      console.log(sortpolysresults.toString());      
 
       bubbleSort(sortpolys, polynomials); // sorts the powers in descending order and the corresponding term as well
       polynomials.reverse();
