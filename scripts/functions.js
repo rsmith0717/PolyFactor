@@ -21,6 +21,7 @@ function bubbleSort(items, actual) {
             }
         }
     }
+    actual.reverse();
 }
 
 function GCF(array1, array2) {
@@ -73,16 +74,19 @@ function zerotester(polynomials, constants) {
 }
 
 function getFactors(zerotest, polyfacts, constfacts) {
+    console.log(zerotest[0]);    
     var factoree1 = parseInt(zerotest[0]); // the leading coefficient of greatest power polynomial
     var factoree2 = parseInt(zerotest[1]); // the constant
+    console.log(factoree1)
+    
 
-    for (x = 0; x <= factoree1; x++) {
+    for (var x = 0; x <= factoree1; x++) {
         if (factoree1 % x == 0) {
             polyfacts.push(x)
         }
     }
 
-    for (x = 0; x <= factoree2; x++) {
+    for (var x = 0; x <= factoree2; x++) {
         if (factoree2 % x == 0) {
             constfacts.push(x)
         }
@@ -90,4 +94,40 @@ function getFactors(zerotest, polyfacts, constfacts) {
 
     console.log(polyfacts.toString()); // factors of the polynomial coefficient
     console.log(constfacts.toString()); // factors of the constant
+}
+
+function cosplit(polynomials, constants) {
+   results = [];
+   console.log(polynomials.toString())
+    for (var x=polynomials.length-1; x >= 0; x--) {
+        var pass = x+1;
+        console.log(pass);
+        if(polynomials[x].search('^'+(pass).toString())) {
+           results.push(polynomials[x].split('x')[0])
+       }else 
+       {
+            console.log('^'+(pass).toString())
+            results.push('0')
+       }
+   }
+   results.unshift(constants);
+   console.log(results.toString())
+   return results;
+}
+
+function synthetic(gcf, dividends) {
+    length = dividends.length;
+    console.log(length)
+    results = [];
+    dividends.forEach(function (element, i) {
+        element = parseInt(element);
+        console.log(element);
+        dividends[i] = element;
+    });
+    console.log(dividends.toString())
+    var divisor = gcf;
+    var carry = 0;
+
+
+    console.log(results.toString())   
 }
