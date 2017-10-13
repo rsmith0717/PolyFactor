@@ -1,5 +1,6 @@
-function descartes(poly) {
+function descartes(polynomials) {
 	var chngNum = 0;
+	var poly = polynomials.toString();
 	console.log("Polynomial: " + poly);
 
 	if (poly.charAt(0) != '-' && poly.charAt(0) != '+') // Adds understood +
