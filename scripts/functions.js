@@ -47,7 +47,7 @@ function polyorconst(arr, constants, polynomials) {
     });
 }
 
-function expsplit(polynomials, results) {
+function expsplit(polynomials, results) { // need to add zeores between powers
     polynomials.forEach(function (poly) { // splits the exponent from the terms containing variables
         var power = 0;
         if (poly.includes('^')) {
@@ -96,7 +96,7 @@ function getFactors(zerotest, polyfacts, constfacts) {
     console.log(constfacts.toString()); // factors of the constant
 }
 
-function cosplit(polynomials, constants) {
+function cosplit(polynomials, constants) { // not working properly needs to push zeores
    results = [];
    console.log(polynomials.toString())
     for (var x=polynomials.length-1; x >= 0; x--) {
@@ -115,10 +115,10 @@ function cosplit(polynomials, constants) {
    return results;
 }
 
-function synthetic(gcf, dividends) {
-    length = dividends.length;
-    console.log(length)
+function synthetic(gcf, dividends) { // works fine until division step
     results = [];
+    console.log('The divisor is: ' + gcf.toString())
+    console.log('The dividends are: ' + dividends.toString())
     dividends.forEach(function (element, i) {
         element = parseInt(element);
         console.log(element);
@@ -128,6 +128,29 @@ function synthetic(gcf, dividends) {
     var divisor = gcf;
     var carry = 0;
 
-
+    results = division(gcf, dividends);
     console.log(results.toString())   
+}
+
+function division(gcf, dividends) {
+    length = dividends.length;
+    console.log(gcf);
+    results = [];
+    var carry = 0;
+
+    for(var x = length-1; x >= 0; x--) {
+        console.log('This is the ' + x + ' iteration of the loop');
+        if(x == length-1) {
+            carry = dividends[x];
+            results.push(carry)
+            console.log('This is the ' + length + ' element')
+        }else {
+            console.log(carry);            
+            carry = (dividends[x] + (carry * gcf))
+            console.log(carry);
+            results.push(carry);
+            console.log('Pushing onto the stack ' + carry.toString())
+        }
+    }
+    return results;
 }

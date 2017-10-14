@@ -1,4 +1,4 @@
-// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3
+// 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3 3x^3-2x^2-61x-20
 var button = document.getElementById('submit');
 var polynomial = '';
 var arr = [];
