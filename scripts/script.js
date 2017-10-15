@@ -1,6 +1,8 @@
 // 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3 3x^3-2x^2-61x-20
+// 3x^4-8x^3-37x^2+2x+40
 var button = document.getElementById('submit');
 var polynomial = '';
+var tempoly = '';
 var arr = [];
 var polynomials = []
 var constants = []
@@ -15,7 +17,8 @@ var dividends = [];
 button.onclick = function () {
     var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
     console.log(polynomial);
-    var arr = termsplit(polynomial);
+    tempoly = polynomial;
+    var arr = termsplit(tempoly);
 
     polyorconst(arr, constants, polynomials)
 
@@ -28,7 +31,7 @@ button.onclick = function () {
     bubbleSort(sortpolysresults, polynomials); // sorts the powers in descending order and the corresponding term as well
     console.log(polynomials.toString());
 
-    descartes(polynomial); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
+    descartes(tempoly); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
     // positive and negative zeros
     zerotest = zerotester(polynomials, constants);
 

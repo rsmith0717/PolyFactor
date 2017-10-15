@@ -139,18 +139,45 @@ function division(pZero, dividends) {
     var carry = 0;
 
     for(var x = length-1; x >= 0; x--) {
-        console.log('This is the ' + x + ' iteration of the loop');
+        //console.log('This is the ' + x + ' iteration of the loop');
         if(x == length-1) {
             carry = dividends[x];
             results.push(carry)
-            console.log('This is the ' + length + ' element')
+            //console.log('This is the ' + length + ' element')
         }else {
             console.log(carry);            
             carry = (dividends[x] + (carry * pZero))
-            console.log(carry);
-            results.push(carry);
-            console.log('Pushing onto the stack ' + carry.toString())
+            if(x != 0 && carry != 0 ) {
+                console.log(carry);
+                results.push(carry);
+                console.log('Pushing onto the stack ' + carry.toString())
+            } else { break;}  
         }
     }
+    test = results;
+    concatexponents(test);
+    console.log(test.toString());
     return results;
+}
+
+function concatexponents(results) {
+    results.reverse();
+    length = results.length-1;
+    console.log(length)
+    for(var x = length; x >=0; x--) {
+        console.log('This is the ' + x + ' iteration of the loop.');
+        if (x > 1) {
+            results[x] = results[x].toString() + 'x^' + x.toString();
+            console.log('The concated term is: ' + results[x]);
+        }
+        else if (x == 1) {
+            results[x] = results[x].toString() + 'x';
+            console.log('The concated term is: ' + results[x]);            
+        }
+        else if (x == 0) {
+            results[x] = results[x].toString();
+            console.log('The concated term is: ' + results[x]);
+        }
+    }
+    results.reverse();
 }
