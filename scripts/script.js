@@ -8,7 +8,7 @@ var sortpolysresults = []
 var zerotest = []
 var polyfacts = [];
 var constfacts = [];
-var gcf = 0;
+var pZero = 0;          // potential zero
 var dividends = [];
 
 
@@ -34,11 +34,13 @@ button.onclick = function () {
 
     getFactors(zerotest, polyfacts, constfacts) // finds factors of term with highest exponent and the constant term
 
-    gcf = GCF(polyfacts, constfacts); // finds the greatest common factor between the polynomial term and the constant term
-    console.log(gcf);
+    pZero = possibleZeros(polyfacts, constfacts)
+
+   //gcf = GCF(polyfacts, constfacts); // finds the greatest common factor between the polynomial term and the constant term
+    //console.log(gcf);
 
     dividends = cosplit(polynomials, constants); // give us the coefficients of the polynomial terms
 
-    synthetic(gcf, dividends);
+    synthetic(pZero, dividends);
 
 }

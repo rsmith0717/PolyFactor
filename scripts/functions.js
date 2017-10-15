@@ -115,9 +115,9 @@ function cosplit(polynomials, constants) { // not working properly needs to push
    return results;
 }
 
-function synthetic(gcf, dividends) { // works fine until division step
+function synthetic(pZero, dividends) { // works fine until division step
     results = [];
-    console.log('The divisor is: ' + gcf.toString())
+    console.log('The divisor is: ' + pZero.toString())
     console.log('The dividends are: ' + dividends.toString())
     dividends.forEach(function (element, i) {
         element = parseInt(element);
@@ -125,16 +125,16 @@ function synthetic(gcf, dividends) { // works fine until division step
         dividends[i] = element;
     });
     console.log(dividends.toString())
-    var divisor = gcf;
+    var divisor = pZero;
     var carry = 0;
 
-    results = division(gcf, dividends);
+    results = division(pZero, dividends);
     console.log(results.toString())   
 }
 
-function division(gcf, dividends) {
+function division(pZero, dividends) {
     length = dividends.length;
-    console.log(gcf);
+    console.log(pZero);
     results = [];
     var carry = 0;
 
@@ -146,7 +146,7 @@ function division(gcf, dividends) {
             console.log('This is the ' + length + ' element')
         }else {
             console.log(carry);            
-            carry = (dividends[x] + (carry * gcf))
+            carry = (dividends[x] + (carry * pZero))
             console.log(carry);
             results.push(carry);
             console.log('Pushing onto the stack ' + carry.toString())
