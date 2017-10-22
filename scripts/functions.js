@@ -49,12 +49,12 @@ function expsplit(polynomials, results) { // need to add zeores between powers
     })
 }
 
-function zerotester(polynomials, constants) {
+function testTerms(polynomials, constants) { // takes the leading term of the polynomials and the constant term to pass to the getFactors method
     var zerotest = [];
     console.log(polynomials.toString());
-    console.log(polynomials[0]);
+    //console.log(polynomials[0]);
     var leadingterm = polynomials[0].split(/[a-zA-Z](.+)/)[0];
-    console.log(leadingterm);
+    console.log('The leading polynomial term is: ' + leadingterm);
     zerotest.push(leadingterm);
     if (constants[0] != null) {
         zerotest.push(constants[0]);
@@ -63,22 +63,39 @@ function zerotester(polynomials, constants) {
     return zerotest;
 }
 
-function getFactors(zerotest, polyfacts, constfacts) {
-    console.log(zerotest[0]);
+function getFactors(zerotest, polyfacts, constfacts) { // finds the common factors of the leading polynomial term and the constant term
+   // console.log(zerotest[0]);
+    //console.log(zerotest[1]);    
     var factoree1 = parseInt(zerotest[0]); // the leading coefficient of greatest power polynomial
     var factoree2 = parseInt(zerotest[1]); // the constant
-    console.log(factoree1)
+    console.log(factoree1);
+    console.log(factoree2);
 
 
-    for (var x = 0; x <= factoree1; x++) {
-        if (factoree1 % x == 0) {
-            polyfacts.push(x)
+    if(Math.sign(factoree1) == 1) { // loop for positive polynomial terms
+        for (var x = 0; x <= factoree1; x++) {
+            if (factoree1 % x == 0) {
+                polyfacts.push(x)
+            }
+        }
+    } else if(Math.sign(factoree1) == -1) { // loop for factors of negative polynomial term
+        for (var x = factoree1; x <= 0; x++) {
+            if (factoree1 % x == 0) {
+                polyfacts.push(x)
+            }
         }
     }
-
-    for (var x = 0; x <= factoree2; x++) {
-        if (factoree2 % x == 0) {
-            constfacts.push(x)
+    if(Math.sign(factoree2) == 1) { // loop for factors of positive constant term
+        for (var x = 0; x <= factoree2; x++) {
+            if (factoree2 % x == 0) {
+                constfacts.push(x)
+            }
+        }
+    } else if(Math.sign(factoree2) == -1) { // loop for factors of negative constant term
+        for (var x = factoree2; x <= 0; x++) {
+            if (factoree2 % x == 0) {
+                constfacts.push(x)
+            }
         }
     }
 
@@ -104,13 +121,13 @@ function cosplit(polynomials, constants) { // not working properly needs to push
     return results;
 }
 
-function synthetic(pZero, dividends) { // works fine until division step
+function synthetic(pZero, dividends, finalString) { // works fine until division step
     results = [];
     console.log('The divisor is: ' + pZero.toString())
     console.log('The dividends are: ' + dividends.toString())
     dividends.forEach(function (element, i) {
         element = parseInt(element);
-        console.log(element);
+        //console.log(element);
         dividends[i] = element;
     });
     console.log(dividends.toString())
@@ -119,6 +136,17 @@ function synthetic(pZero, dividends) { // works fine until division step
 
     results = division(pZero, dividends);
     console.log(results.toString())
+    if(Math.sign(pZero) == 1) {
+        pZero = Math.abs(pZero);        
+        finalString = finalString + '(x - ' + pZero.toString() + ')';        
+    }
+    if(Math.sign(pZero) == -1) {
+        pZero = Math.abs(pZero);        
+        finalString = finalString + '(x + ' + pZero.toString() + ')';        
+    }
+    console.log('The final equation is currently: ' + finalString);
+    zerotest()
+    return results;
 }
 
 function division(pZero, dividends) {
@@ -145,9 +173,8 @@ function division(pZero, dividends) {
             }
         }
     }
-    test = results;
-    concatexponents(test);
-    console.log(test.toString());
+    concatexponents(results);
+    console.log('The results are: ' + results.toString());
     return results;
 }
 
@@ -156,7 +183,7 @@ function concatexponents(results) {
     length = results.length - 1;
     console.log(length)
     for (var x = length; x >= 0; x--) {
-        console.log('This is the ' + x + ' iteration of the loop.');
+        //console.log('This is the ' + x + ' iteration of the loop.');
         if (x > 1) {
             results[x] = results[x].toString() + 'x^' + x.toString();
             console.log('The concated term is: ' + results[x]);

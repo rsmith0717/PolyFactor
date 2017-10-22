@@ -12,6 +12,7 @@ var polyfacts = [];
 var constfacts = [];
 var pZero = 0;          // potential zero
 var dividends = [];
+var finalString = '';
 
 
 button.onclick = function () {
@@ -33,7 +34,7 @@ button.onclick = function () {
 
     descartes(tempoly); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
     // positive and negative zeros
-    zerotest = zerotester(polynomials, constants);
+    zerotest = testTerms(polynomials, constants);
 
     getFactors(zerotest, polyfacts, constfacts) // finds factors of term with highest exponent and the constant term
 
@@ -44,6 +45,6 @@ button.onclick = function () {
 
     dividends = cosplit(polynomials, constants); // give us the coefficients of the polynomial terms
 
-    synthetic(pZero, dividends);
+    synthetic(pZero, dividends, finalString);
 
 }
