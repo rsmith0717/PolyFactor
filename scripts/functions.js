@@ -3,7 +3,6 @@ function termsplit(polynomial) {
     return arr;
 }
 
-
 function bubbleSort(items, actual) {
     var length = items.length;
     for (var i = 0; i < length; i++) { //Number of passes
@@ -24,15 +23,6 @@ function bubbleSort(items, actual) {
     actual.reverse();
 }
 
-function GCF(array1, array2) {
-    var gcf = 0;
-    array1.forEach(function (element) {
-        if (array2.includes(element)) {
-            gcf = parseInt(element);
-        }
-    });
-    return gcf;
-}
 
 function polyorconst(arr, constants, polynomials) {
 
@@ -74,11 +64,11 @@ function zerotester(polynomials, constants) {
 }
 
 function getFactors(zerotest, polyfacts, constfacts) {
-    console.log(zerotest[0]);    
+    console.log(zerotest[0]);
     var factoree1 = parseInt(zerotest[0]); // the leading coefficient of greatest power polynomial
     var factoree2 = parseInt(zerotest[1]); // the constant
     console.log(factoree1)
-    
+
 
     for (var x = 0; x <= factoree1; x++) {
         if (factoree1 % x == 0) {
@@ -97,22 +87,21 @@ function getFactors(zerotest, polyfacts, constfacts) {
 }
 
 function cosplit(polynomials, constants) { // not working properly needs to push zeores
-   results = [];
-   console.log(polynomials.toString())
-    for (var x=polynomials.length-1; x >= 0; x--) {
-        var pass = x+1;
+    results = [];
+    console.log(polynomials.toString())
+    for (var x = polynomials.length - 1; x >= 0; x--) {
+        var pass = x + 1;
         console.log(pass);
-        if(polynomials[x].search('^'+(pass).toString())) {
-           results.push(polynomials[x].split('x')[0])
-       }else 
-       {
-            console.log('^'+(pass).toString())
+        if (polynomials[x].search('^' + (pass).toString())) {
+            results.push(polynomials[x].split('x')[0])
+        } else {
+            console.log('^' + (pass).toString())
             results.push('0')
-       }
-   }
-   results.unshift(constants);
-   console.log(results.toString())
-   return results;
+        }
+    }
+    results.unshift(constants);
+    console.log(results.toString())
+    return results;
 }
 
 function synthetic(pZero, dividends) { // works fine until division step
@@ -129,7 +118,7 @@ function synthetic(pZero, dividends) { // works fine until division step
     var carry = 0;
 
     results = division(pZero, dividends);
-    console.log(results.toString())   
+    console.log(results.toString())
 }
 
 function division(pZero, dividends) {
@@ -138,19 +127,46 @@ function division(pZero, dividends) {
     results = [];
     var carry = 0;
 
-    for(var x = length-1; x >= 0; x--) {
-        console.log('This is the ' + x + ' iteration of the loop');
-        if(x == length-1) {
+    for (var x = length - 1; x >= 0; x--) {
+        //console.log('This is the ' + x + ' iteration of the loop');
+        if (x == length - 1) {
             carry = dividends[x];
             results.push(carry)
-            console.log('This is the ' + length + ' element')
-        }else {
-            console.log(carry);            
-            carry = (dividends[x] + (carry * pZero))
+            //console.log('This is the ' + length + ' element')
+        } else {
             console.log(carry);
-            results.push(carry);
-            console.log('Pushing onto the stack ' + carry.toString())
+            carry = (dividends[x] + (carry * pZero))
+            if (x != 0 && carry != 0) {
+                console.log(carry);
+                results.push(carry);
+                console.log('Pushing onto the stack ' + carry.toString())
+            } else {
+                break;
+            }
         }
     }
+    test = results;
+    concatexponents(test);
+    console.log(test.toString());
     return results;
+}
+
+function concatexponents(results) {
+    results.reverse();
+    length = results.length - 1;
+    console.log(length)
+    for (var x = length; x >= 0; x--) {
+        console.log('This is the ' + x + ' iteration of the loop.');
+        if (x > 1) {
+            results[x] = results[x].toString() + 'x^' + x.toString();
+            console.log('The concated term is: ' + results[x]);
+        } else if (x == 1) {
+            results[x] = results[x].toString() + 'x';
+            console.log('The concated term is: ' + results[x]);
+        } else if (x == 0) {
+            results[x] = results[x].toString();
+            console.log('The concated term is: ' + results[x]);
+        }
+    }
+    results.reverse();
 }
