@@ -26,7 +26,7 @@ class Polynomial {
         descartes(this.tempoly);
         this.zerotest = this.testTerms(this.polynomials, this.constants);
         this.getFactors(this.zerotest, this.polyfacts, this.constfacts);
-        this.pZero = possibleZeroes(this.polyfacts, this.constfacts);
+        this.pZero = possibleZeros(this.polyfacts, this.constfacts);
         this.dividends = cosplit(this.polynomials, this.constfacts);
         this.synthetic(this.pZero, this.dividends, this.finalString);
         
@@ -180,8 +180,8 @@ class Polynomial {
             pZero = Math.abs(pZero);        
             finalString = finalString + '(x + ' + pZero.toString() + ')';        
         }
-        console.log('The final equation is currently: ' + finalString);
-        zerotest(results, polynomials, constants);
+        console.log('The final equation is currently: ' + finalString + '(' + results + ')');
+        testTerms(results, constants);
         return results;
     }
     
@@ -233,5 +233,33 @@ class Polynomial {
         }
         results.reverse();
     }
-  }
 
+    possibleZeros(polyfacts, constfacts) {
+        var bigVar = 0;
+        var smallVar = 0;
+        var result = 0;
+        var negRes = 0;
+        var res = []
+        if (constfacts.length > polyfacts.length) {  // find out which has more factors and use it as dividend
+            bigVar = constfacts.length
+            smallVar = polyfacts.length
+        }
+        else {
+            bigVar = polyfacts.length
+            smallVar = constfacts.length
+        }
+        for (var y = 0; y < smallVar; y++) {        // loop runs until smallest array is done
+            for (var x = 0; x < bigVar; x++) {      // loop runs through biggest array on each increment of first loop
+                result = constfacts[x]/polyfacts[y]
+                res.push(result)
+                negRes = (result - (result * 2))
+                res.push(negRes)
+            //console.log('push to new array: ', res[x])
+            }
+        }
+        console.log('printing', res.toString())
+        var temp = res[0]
+        return temp
+    }
+  }
+ 
