@@ -146,8 +146,13 @@ function synthetic(pZero, dividends, finalString) { // works fine until division
         pZero = Math.abs(pZero);        
         finalString = finalString + '(x + ' + pZero.toString() + ')';        
     }
+<<<<<<< HEAD
     console.log('The final equation is currently: ' + finalString);
     zerotest(results, polynomials, constants);
+=======
+    console.log('The final equation is currently: ' + finalString + '(' + results + ')');
+    //testTerms();
+>>>>>>> 81901e02917b77e746b6bb309e0544ea1e05321d
     return results;
 }
 

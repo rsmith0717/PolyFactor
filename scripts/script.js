@@ -33,8 +33,8 @@ button.onclick = function () {
     bubbleSort(sortpolysresults, polynomials); // sorts the powers in descending order and the corresponding term as well
     console.log(polynomials.toString());
 
-    descartes(tempoly); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
-    // positive and negative zeros
+    //descartes(polynomial); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
+                        // positive and negative zeros
     zerotest = testTerms(polynomials, constants);
 
     getFactors(zerotest, polyfacts, constfacts) // finds factors of term with highest exponent and the constant term
