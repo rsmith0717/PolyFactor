@@ -1,5 +1,5 @@
 class Polynomial {
-    constructor(equation) {
+    constructor(equation, finaloutput) {
       this.polynomial = equation;
       this.tempoly = equation;
       this.arr = [];
@@ -26,15 +26,24 @@ class Polynomial {
         descartes(this.tempoly);
         this.zerotest = this.testTerms(this.polynomials, this.constants);
         this.getFactors(this.zerotest, this.polyfacts, this.constfacts);
-        this.pZero = possibleZeroes(this.polyfacts, this.constfacts);
+        this.pZero = possibleZeros(this.polyfacts, this.constfacts);
         this.dividends = cosplit(this.polynomials, this.constfacts);
-        this.synthetic(this.pZero, this.dividends, this.finalString);
+        var next = this.synthetic(this.pZero, this.dividends, this.finalString);
+        syntheticdivision(next, this.finalString);
         
     }
 
 
      termsplit() {
         this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
+    }
+
+    rejoin(partsofpoly) {
+        newequation = '';
+        for(x = parsofpoly.length; x >= 0; x--) {
+            current = partsofpoly[x];
+            next = partsofpoly[x+1];
+        }
     }
     
      bubbleSort(items, actual) {
@@ -181,7 +190,6 @@ class Polynomial {
             finalString = finalString + '(x + ' + pZero.toString() + ')';        
         }
         console.log('The final equation is currently: ' + finalString);
-        zerotest(results, polynomials, constants);
         return results;
     }
     
