@@ -189,12 +189,8 @@ class Polynomial {
             pZero = Math.abs(pZero);        
             finalString = finalString + '(x + ' + pZero.toString() + ')';        
         }
-<<<<<<< HEAD
-        console.log('The final equation is currently: ' + finalString);
-=======
         console.log('The final equation is currently: ' + finalString + '(' + results + ')');
         testTerms(results, constants);
->>>>>>> d6aa7526e9ce61680d093ffeb68db2195d536643
         return results;
     }
     
