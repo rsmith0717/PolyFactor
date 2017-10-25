@@ -122,6 +122,8 @@ function cosplit(polynomials, constants) { // not working properly needs to push
 }
 
 function synthetic(pZero, dividends, finalString) { // works fine until division step
+    var polynomials = '';
+    var constants = '';    
     results = [];
     console.log('The divisor is: ' + pZero.toString())
     console.log('The dividends are: ' + dividends.toString())

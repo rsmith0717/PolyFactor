@@ -1,6 +1,6 @@
 // 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3 3x^3-2x^2-61x-20
 // 3x^4-8x^3-37x^2+2x+40
-var button = document.getElementById('submit');
+/**var button = document.getElementById('submit');
 var polynomial = '';
 var tempoly = '';
 var arr = [];
@@ -17,6 +17,7 @@ var finalString = '';
 
 button.onclick = function () {
     var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
+    let polynomial1 = new Polynomial(polynomial);
     console.log(polynomial);
     tempoly = polynomial;
     var arr = termsplit(tempoly);
@@ -46,5 +47,14 @@ button.onclick = function () {
     dividends = cosplit(polynomials, constants); // give us the coefficients of the polynomial terms
 
     synthetic(pZero, dividends, finalString);
+} **/
 
-}
+$( document ).ready(function() {
+    let button = document.getElementById('submit');
+    
+    button.addEventListener('click', () => {
+        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
+        let polynomial1 = new Polynomial(polynomial);
+        polynomial1.syntheticdivision();
+    });
+});
