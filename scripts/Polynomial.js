@@ -30,7 +30,7 @@ class Polynomial {
             descartes(this.tempoly);
             this.zerotest = this.testTerms(this.polynomials, this.constants);
             this.getFactors(this.zerotest, this.polyfacts, this.constfacts);
-            this.pZero = possibleZeros(this.polyfacts, this.constfacts);
+            this.pZero = this.possibleZeros(this.polyfacts, this.constfacts);
             this.dividends = cosplit(this.polynomials, this.constfacts);
             var next = this.synthetic(this.pZero, this.dividends, this.finalString);
             var pass = rejoin(next);
@@ -259,9 +259,9 @@ class Polynomial {
         for (var y = 0; y < smallVar; y++) { // loop runs until smallest array is done
             for (var x = 0; x < bigVar; x++) { // loop runs through biggest array on each increment of first loop
                 result = constfacts[x] / polyfacts[y]
-                res.push(result)
+                res.push(math.fraction(result))
                 negRes = (result - (result * 2))
-                res.push(negRes)
+                res.push(math.fraction(negRes))
                 //console.log('push to new array: ', res[x])
             }
         }
