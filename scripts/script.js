@@ -54,7 +54,7 @@ $( document ).ready(function() {
     
     button.addEventListener('click', () => {
         var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
-        let polynomial1 = new Polynomial(polynomial);
+        let polynomial1 = new Polynomial(polynomial,'');
         polynomial1.syntheticdivision();
     });
 });
