@@ -1,4 +1,4 @@
-function possibleZeros(polyfacts, constfacts) {
+/**function possibleZeros(polyfacts, constfacts) {
     var bigVar = 0;
     var smallVar = 0;
     var result = 0;
@@ -24,4 +24,4 @@ function possibleZeros(polyfacts, constfacts) {
     console.log('printing', res.toString())
     var temp = res[0]
     return temp
-}
+}**/
