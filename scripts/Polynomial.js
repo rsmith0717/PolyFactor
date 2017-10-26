@@ -18,7 +18,7 @@ class Polynomial {
         console.log('The polynomial is: ' + this.polynomial);
         this.termsplit();
         console.log('The split terms are: ' + this.arr.toString());
-        console.log('The current equation is: ' + this.finalString);
+        console.log('The current equation is: ' + this.finalString + '('+ this.polynomial+ ')');
 
         this.polyorconst();
         console.log(this.polynomials.toString());
@@ -31,9 +31,11 @@ class Polynomial {
             descartes(this.tempoly);
             this.zerotest = this.testTerms();
             this.getFactors();
-            this.pZero = possibleZeros(this.polyfacts, this.constfacts);
-            this.dividends = cosplit(this.polynomials, this.constfacts);
-            var next = this.synthetic(this.pZero, this.dividends, this.finalString);
+            this.possibleZeros();
+            this.cosplit();
+            //this.pZero = this.possibleZeros();
+            //this.dividends = cosplit();
+            var next = this.synthetic();
             var pass = rejoin(next);
             let poly2 = new Polynomial(pass, this.finalString);
             poly2.syntheticdivision();
@@ -155,7 +157,7 @@ class Polynomial {
     }
 
     cosplit() { // not working properly needs to push zeores
-        results = [];
+        var results = [];
         console.log(this.polynomials.toString())
         for (var x = this.polynomials.length - 1; x >= 0; x--) {
             var pass = x + 1;
@@ -169,10 +171,10 @@ class Polynomial {
         }
         results.unshift(this.constfacts);
         console.log(results.toString())
-        return results;
+        this.dividends = results;
     }
 
-    synthetic(pZero, dividends, finalString) { // works fine until division step
+    synthetic() { // works fine until division step
         var polynomials = '';
         var constants = '';
         var dividends = [];
@@ -189,25 +191,24 @@ class Polynomial {
         var divisor = this.pZero;
         var carry = 0;
 
-        results = division(this.pZero, this.dividends);
+        results = this.division();
         console.log(results.toString())
         if (Math.sign(this.pZero) == 1) {
-            this.pZero = Math.abs(pZero);
+            this.pZero = Math.abs(this.pZero);
             this.finalString = this.finalString + '(x - ' + this.pZero.toString() + ')';
         }
-        if (Math.sign(pZero) == -1) {
-           this. pZero = Math.abs(pZero);
+        if (Math.sign(this.pZero) == -1) {
+           this.pZero = Math.abs(this.pZero);
             this.finalString = this.finalString + '(x + ' + this.pZero.toString() + ')';
         }
-        console.log('The final equation is currently: ' + this.finalString + '(' + this.results + ')');
-        testTerms(results, constants);
+        console.log('The final equation is currently: ' + this.finalString + '(' + rejoin(results) + ')');
         return results;
     }
 
     division() {
         length = this.dividends.length;
         console.log(this.pZero);
-        results = [];
+        var results = [];
         var carry = 0;
 
         for (var x = length - 1; x >= 0; x--) {
@@ -233,25 +234,6 @@ class Polynomial {
         return results;
     }
 
-    concatexponents(results) {
-        results.reverse();
-        length = results.length - 1;
-        console.log(length)
-        for (var x = length; x >= 0; x--) {
-            //console.log('This is the ' + x + ' iteration of the loop.');
-            if (x > 1) {
-                results[x] = results[x].toString() + 'x^' + x.toString();
-                console.log('The concated term is: ' + results[x]);
-            } else if (x == 1) {
-                results[x] = results[x].toString() + 'x';
-                console.log('The concated term is: ' + results[x]);
-            } else if (x == 0) {
-                results[x] = results[x].toString();
-                console.log('The concated term is: ' + results[x]);
-            }
-        }
-        results.reverse();
-    }
 
     possibleZeros() {
         var bigVar = 0;
@@ -268,7 +250,7 @@ class Polynomial {
         }
         for (var y = 0; y < smallVar; y++) { // loop runs until smallest array is done
             for (var x = 0; x < bigVar; x++) { // loop runs through biggest array on each increment of first loop
-                result = constfacts[x] / polyfacts[y]
+                result = this.constfacts[x] / this.polyfacts[y]
                 res.push(math.fraction(result))
                 negRes = (result - (result * 2))
                 res.push(math.fraction(negRes))
@@ -276,8 +258,7 @@ class Polynomial {
             }
         }
         console.log('printing', res.toString())
-        var temp = res[0]
-        return temp
+         this.pZero = res[0];
     }
 
 }
@@ -302,4 +283,24 @@ function rejoin(partsofpoly) {
     partsofpoly = newequation;
     console.log('The new equation is: ' + partsofpoly);
     return partsofpoly;
+}
+
+function concatexponents(results) {
+    results.reverse();
+    length = results.length - 1;
+    console.log(length)
+    for (var x = length; x >= 0; x--) {
+        //console.log('This is the ' + x + ' iteration of the loop.');
+        if (x > 1) {
+            results[x] = results[x].toString() + 'x^' + x.toString();
+            console.log('The concated term is: ' + results[x]);
+        } else if (x == 1) {
+            results[x] = results[x].toString() + 'x';
+            console.log('The concated term is: ' + results[x]);
+        } else if (x == 0) {
+            results[x] = results[x].toString();
+            console.log('The concated term is: ' + results[x]);
+        }
+    }
+    results.reverse();
 }

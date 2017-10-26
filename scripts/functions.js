@@ -1,3 +1,4 @@
+/** 
 function termsplit(polynomial) {
     arr = polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
     return arr;
@@ -199,3 +200,4 @@ function concatexponents(results) {
     }
     results.reverse();
 }
+**/
