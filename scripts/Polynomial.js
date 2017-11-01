@@ -10,6 +10,8 @@ class Polynomial {
         this.polyfacts = [];
         this.constfacts = [];
         this.pZero = 0; // potential zero
+        this.pZeroes = [];
+        this.actZero = 0;
         this.dividends = [];
         this.finalString = finaloutput;
     }
@@ -18,7 +20,7 @@ class Polynomial {
         console.log('The polynomial is: ' + this.polynomial);
         this.termsplit();
         console.log('The split terms are: ' + this.arr.toString());
-        console.log('The current equation is: ' + this.finalString + '('+ this.polynomial+ ')');
+        console.log('The current equation is: ' + this.finalString + '(' + this.polynomial + ')');
 
         this.polyorconst();
         console.log(this.polynomials.toString());
@@ -169,7 +171,7 @@ class Polynomial {
                 results.push('0')
             }
         }
-        results.unshift(this.constfacts);
+        results.unshift(this.constants);
         console.log(results.toString())
         this.dividends = results;
     }
@@ -179,27 +181,26 @@ class Polynomial {
         var constants = '';
         var dividends = [];
         var results = [];
-        console.log('The divisor is: ' + this.pZero.toString())
-        console.log('The dividends are: ' + this.dividends.toString())
         this.dividends.forEach(function (element, i) {
             element = parseInt(element);
             //console.log(element);
             dividends[i] = element;
         });
         this.dividends = dividends;
+        this.actualZero();
+        console.log('The divisor is: ' + this.actZero.toString())
+        console.log('The dividends are: ' + this.dividends.toString())
         console.log(this.dividends.toString())
-        var divisor = this.pZero;
-        var carry = 0;
 
         results = this.division();
         console.log(results.toString())
-        if (Math.sign(this.pZero) == 1) {
-            this.pZero = Math.abs(this.pZero);
-            this.finalString = this.finalString + '(x - ' + this.pZero.toString() + ')';
+        if (Math.sign(this.actZero) == 1) {
+            this.actZero = Math.abs(this.actZero);
+            this.finalString = this.finalString + '(x - ' + this.actZero.toString() + ')';
         }
-        if (Math.sign(this.pZero) == -1) {
-           this.pZero = Math.abs(this.pZero);
-            this.finalString = this.finalString + '(x + ' + this.pZero.toString() + ')';
+        if (Math.sign(this.actZero) == -1) {
+            this.actZero = Math.abs(this.actZero);
+            this.finalString = this.finalString + '(x + ' + this.actZero.toString() + ')';
         }
         console.log('The final equation is currently: ' + this.finalString + '(' + rejoin(results) + ')');
         return results;
@@ -207,7 +208,7 @@ class Polynomial {
 
     division() {
         length = this.dividends.length;
-        console.log(this.pZero);
+        console.log(this.actZero);
         var results = [];
         var carry = 0;
 
@@ -219,7 +220,7 @@ class Polynomial {
                 //console.log('This is the ' + length + ' element')
             } else {
                 console.log(carry);
-                carry = (this.dividends[x] + (carry * this.pZero))
+                carry = (this.dividends[x] + (carry * this.actZero))
                 if (x != 0 && carry != 0) {
                     console.log(carry);
                     results.push(carry);
@@ -258,7 +259,48 @@ class Polynomial {
             }
         }
         console.log('printing', res.toString())
-         this.pZero = res[0];
+        this.pZeroes = res;
+    }
+
+    actualZero() {
+        length = this.dividends.length;
+        console.log(this.pZero);
+        console.log('Testing the dividends: ' + this.dividends.toString());        
+        var results = [];
+        var carry = 0;
+        var foundZero = false;
+        var z = 0;
+        while (z < this.pZeroes.length) {
+            this.pZero = this.pZeroes[z];
+            console.log('Currently testing pZero: ' + this.pZero);
+            for (var x = length - 1; x >= 0; x--) {
+                //console.log('This is the ' + x + ' iteration of the loop');
+                if (x == length - 1) {
+                    carry = this.dividends[x];
+                    results.push(carry)
+                    //console.log('This is the ' + length + ' element')
+                } else {
+                    console.log('X is currently: ' + x);
+                    console.log('Carry is at first: ' + carry);
+                    console.log('The current dividend is: ' + this.dividends[x]);
+                    carry = (this.dividends[x] + (carry * this.pZero))
+                    console.log('Carry is now: ' + carry);                    
+                    if (x != 0 && carry != 0) {
+                        console.log(carry);
+                        results.push(carry);
+                        console.log('Search continues.');
+                        //console.log('Pushing onto the stack ' + carry.toString())
+                    } else if (x == 0 && carry == 0) {
+                        console.log('Ending search for actZero.');
+                        this.actZero = this.pZero;
+                        foundZero = true;
+                        break;
+                    }
+                }
+            }
+            if(foundZero) { break;}
+            z++;
+        }
     }
 
 }
