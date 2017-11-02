@@ -18,7 +18,9 @@ class Polynomial {
 
     syntheticdivision() {
         console.log('The polynomial is: ' + this.polynomial);
-        this.termsplit();
+        //this.addOnes(); // adds ones
+        this.termsplit(); // is currently removing the added ones for some reason
+        this.addOnes();
         console.log('The split terms are: ' + this.arr.toString());
         console.log('The current equation is: ' + this.finalString + '(' + this.polynomial + ')');
 
@@ -26,9 +28,11 @@ class Polynomial {
         console.log(this.polynomials.toString());
         console.log(this.constants.toString());
         this.sortpolysresults = this.expsplit();
+        console.log(this.sortpolysresults.toString());
+        this.bubbleSort(this.sortpolysresults, this.polynomials);
+        console.log(this.sortpolysresults.toString());   
         if (this.sortpolysresults[0] > 2) { // checks if the first term's exponent is greater than ^2
             console.log(this.sortpolysresults.toString());
-            this.bubbleSort(this.sortpolysresults, this.polynomials);
             console.log(this.polynomials.toString());
             descartes(this.tempoly);
             this.zerotest = this.testTerms();
@@ -42,13 +46,83 @@ class Polynomial {
             let poly2 = new Polynomial(pass, this.finalString);
             poly2.syntheticdivision();
         } else { // quadratic needs to take place when the first term's exponent is ^2
-
+            this.quadratic()
         }
+    }
+
+    addOnes() {
+        for (var z = 0; z < this.arr.length; z++) {
+            var tempoly = this.arr[z].match(/\S/g);
+            //console.log('The chars of the polynomial are: ' + tempoly.toString());            
+            for (var x = 0; x < tempoly.length; x++) {
+                var current = tempoly[x];
+                var prev = tempoly[x - 1];
+                //console.log('The current char is: ' + current);
+                //console.log('The prev char is: ' + prev);                
+                if (current == 'x') {
+                    var result = /^[^0-9]+$/g.test(prev);
+                    //console.log('The result of the regex is: ' + result);
+                    if (result == true) {
+                        tempoly.splice(x, 0, '1');
+                    }
+                }
+            }
+            this.arr[z] = tempoly.join("");
+            //console.log(this.arr[z]);
+        }
+    }
+
+    quadratic() {
+        this.cosplit()
+        console.log(this.dividends.toString());
+        var a = parseInt(this.dividends[2]);
+        console.log(a);
+        var b = parseInt(this.dividends[1]);
+        console.log(b);
+        var c = parseInt(this.dividends[0]);
+        console.log(c);
+        var testpos = ((b * b) + ((-4 * a) * c));
+        console.log("The root test gives me this: " + testpos);
+        var posroot = Math.sqrt(testpos);
+        console.log('The posroot is: ' + posroot.toString());
+        var negroot = -1 * (Math.sqrt(testpos));
+        console.log('The negroot is: ' + negroot.toString());
+
+        var posx = ((-1 * b) + posroot) / (2 * a);
+        var negx = ((-1 * b) + negroot) / (2 * a);
+        console.log(posx.toString());
+        console.log(negx.toString());
+
+        var firstx = '';
+        var secx = '';
+
+        if (Math.sign(posx) == 1) {
+            posx = Math.abs(posx);
+            firstx = firstx + '(x - ' + posx.toString() + ')';
+        }
+        if (Math.sign(posx) == -1) {
+            posx = Math.abs(posx);
+            firstx = firstx + '(x + ' + posx.toString() + ')';
+        }
+
+        if (Math.sign(negx) == 1) {
+            negx = Math.abs(negx);
+            secx = secx + '(x - ' + negx.toString() + ')';
+        }
+        if (Math.sign(negx) == -1) {
+            negx = Math.abs(negx);
+            secx = secx + '(x + ' + negx.toString() + ')';
+        }
+        this.finalString = this.finalString + firstx + secx;
+        console.log(this.finalString);
+
+
     }
 
 
     termsplit() {
         this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
+        console.log("The array of split terms is: " + this.arr.toString());
     }
 
     bubbleSort(items, actual) {
@@ -69,14 +143,14 @@ class Polynomial {
             }
         }
         actual.reverse();
+        items.reverse();
     }
 
 
     polyorconst() {
         var constants = []
         var polynomials = []
-        this.arr.forEach(function (term) { //                      seperates the constant from the terms containing variables
-            //var constant = /^\d+$/.test(term);
+        this.arr.forEach(function (term) { // seperates the constant from the terms containing variables
             console.log(term);
             var constant = /^[-|+]?\d*\.?\d+$/.test(term);
             console.log(constant);
@@ -86,6 +160,9 @@ class Polynomial {
                 polynomials.push(term);
             }
         });
+        if (constants === undefined || constants.length == 0) {
+            constants.push('0');
+        }
         this.constants = constants;
         this.polynomials = polynomials;
     }
@@ -158,18 +235,29 @@ class Polynomial {
         console.log(this.constfacts.toString()); // factors of the constant
     }
 
-    cosplit() { // not working properly needs to push zeores
+    cosplit() { // splits coefficients from terms in polynomial
         var results = [];
         console.log(this.polynomials.toString())
-        for (var x = this.polynomials.length - 1; x >= 0; x--) {
+        for (var x = this.polynomials.length - 1; x >= 0; x--) { // there is a problem here somewhere
             var pass = x + 1;
             console.log(pass);
-            if (this.polynomials[x].search('^' + (pass).toString())) {
-                results.push(this.polynomials[x].split('x')[0])
-            } else {
+            this.polynomials[x].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            console.log(this.polynomials[x].toString());
+            if (x >= 0) {
+                //results.push(this.polynomials[x]);
+                results.push(this.polynomials[x].split('x')[0]);
+                console.log(this.polynomials[x].split('x')[0]);
+            }
+            //else if ( x > 0 && this.polynomials[x].includes('^' + (pass).toString())) {
+            /**else if ( x > 0) {
+                results.push(this.polynomials[x].split('x')[0]);
+                console.log(this.polynomials[x].split('x')[0]);
+            } **/
+           /** else if (x > 0 && !this.polynomials[x].includes('^' + (pass.toString()))) {
+                console.log('This didnt work out. ' + this.polynomials[x]);
                 console.log('^' + (pass).toString())
                 results.push('0')
-            }
+            } **/
         }
         results.unshift(this.constants);
         console.log(results.toString())
@@ -265,7 +353,7 @@ class Polynomial {
     actualZero() {
         length = this.dividends.length;
         console.log(this.pZero);
-        console.log('Testing the dividends: ' + this.dividends.toString());        
+        console.log('Testing the dividends: ' + this.dividends.toString());
         var results = [];
         var carry = 0;
         var foundZero = false;
@@ -284,7 +372,7 @@ class Polynomial {
                     console.log('Carry is at first: ' + carry);
                     console.log('The current dividend is: ' + this.dividends[x]);
                     carry = (this.dividends[x] + (carry * this.pZero))
-                    console.log('Carry is now: ' + carry);                    
+                    console.log('Carry is now: ' + carry);
                     if (x != 0 && carry != 0) {
                         console.log(carry);
                         results.push(carry);
@@ -298,7 +386,9 @@ class Polynomial {
                     }
                 }
             }
-            if(foundZero) { break;}
+            if (foundZero) {
+                break;
+            }
             z++;
         }
     }
