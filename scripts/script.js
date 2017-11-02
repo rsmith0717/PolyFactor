@@ -1,5 +1,5 @@
 // 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3 3x^3-2x^2-61x-20
-// 3x^4-8x^3-37x^2+2x+40
+// 3x^4-8x^3-37x^2+2x+40 2x^4+x^3-19x^2-9x+9
 /**var button = document.getElementById('submit');
 var polynomial = '';
 var tempoly = '';
@@ -55,6 +55,17 @@ $( document ).ready(function() {
     button.addEventListener('click', () => {
         var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
         polynomial1 = new Polynomial(polynomial,'');
+        //console.log(Math.sqrt(304));
         polynomial1.syntheticdivision();
+        var test = ('1x^3');
+        var pass = 3;
+        test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        console.log(test);
+        if (test.search('^' + (pass).toString())) {
+           console.log(test.split('x')[0]);
+        }
+
+        //polynomial2 = new Polynomial('2x^2-5x-3','');
+        //polynomial2.syntheticdivision();
     });
 });
