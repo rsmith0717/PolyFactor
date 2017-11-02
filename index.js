@@ -1,3 +1,5 @@
+// run npm install to install modules form package.json 
+//  then run node index.js to start serving files at localhost:5000
 var express = require('express');
 var path = require('path');
 var app = express();
