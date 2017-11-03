@@ -4,7 +4,8 @@
   "description": "webapp to factor polynomials using synthetic division and quadratic equation",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "start": "webpack ./public/scripts/script.js ./public/scripts/bundle.js"
   },
   "repository": {
     "type": "git",

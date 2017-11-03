@@ -1,4 +1,6 @@
 var math = require('./math.js');
+//var script = require('./script.js');
+
 
 
 class Polynomial {
