@@ -118,7 +118,7 @@ button.onclick = function () {
     synthetic(pZero, dividends, finalString);
 } **/
 
-var poly = __webpack_require__(1);
+var Polynomial = __webpack_require__(1);
 
 
 $( document ).ready(function() {

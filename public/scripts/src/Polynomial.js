@@ -3,7 +3,7 @@ var math = require('./math.js');
 
 
 
-class Polynomial {
+export class Polynomial {
     constructor(equation, finaloutput) {
         this.polynomial = equation;
         this.tempoly = equation;
@@ -405,7 +405,7 @@ class Polynomial {
 
 }
 
-function rejoin(partsofpoly) {
+export function rejoin(partsofpoly) {
     var newequation = '';
     console.log(partsofpoly.length)
     for (x = 0; x < partsofpoly.length; x++) {
@@ -427,7 +427,7 @@ function rejoin(partsofpoly) {
     return partsofpoly;
 }
 
-function concatexponents(results) {
+export function concatexponents(results) {
     results.reverse();
     length = results.length - 1;
     console.log(length)
@@ -447,7 +447,7 @@ function concatexponents(results) {
     results.reverse();
 }
 
-function descartes(polynomial) {
+export function descartes(polynomial) {
 	var chngNum = 0;
 	var poly = polynomial.toString();
 	console.log("Polynomial: " + poly);
@@ -542,7 +542,7 @@ function descartes(polynomial) {
 }
 
 
-exports.factorPolynomial = function() {
+export function factorPolynomial() {
     polynomial1 = new Polynomial('3x^3-2x^2-61x-20','');
     console.log(polynomial1.syntheticdivision());
     return polynomial1.syntheticdivision();
