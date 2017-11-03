@@ -47,8 +47,8 @@ class Polynomial {
             var next = this.synthetic();
             var pass = rejoin(next);
             let poly2 = new Polynomial(pass, this.finalString);
-            poly2.syntheticdivision();
-            return poly2.syntheticdivision()
+            //poly2.syntheticdivision();
+            return poly2.syntheticdivision();
         } else { // quadratic needs to take place when the first term's exponent is ^2
             //this.quadratic();
             return this.quadratic();
@@ -130,6 +130,7 @@ class Polynomial {
     termsplit() {
         this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
         console.log("The array of split terms is: " + this.arr.toString());
+        return this.arr.toString();
     }
 
     bubbleSort(items, actual) {
@@ -544,4 +545,19 @@ exports.factorPolynomial = function() {
     polynomial1 = new Polynomial('3x^3-2x^2-61x-20','');
     console.log(polynomial1.syntheticdivision());
     return polynomial1.syntheticdivision();
+  }
+
+  exports.testTermSplit = function() {
+    polynomial1 = new Polynomial('3x^3-2x^2-61x-20','');
+    //console.log(polynomial1.syntheticdivision());
+     return polynomial1.termsplit();
+
+  }
+
+  exports.testAddOnes = function() {
+    polynomial1 = new Polynomial('x^3-2x^2-x-20','');
+    //console.log(polynomial1.syntheticdivision());
+    polynomial1.termsplit();
+    polynomial1.addOnes();
+    return polynomial1.arr.toString();
   }
