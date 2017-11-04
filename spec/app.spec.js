@@ -25,8 +25,8 @@ describe("Term Split", () => {
     });
 });
 
-describe("Term Split", () => {
-    it("splits the polynomial into individual terms", () => {
+describe("Test Add Ones", () => {
+    it("Adds ones to the polynomial", () => {
         expect(polynomial.testAddOnes()).toEqual('1x^3,-2x^2,-1x,-20');
     });
 });
@@ -37,7 +37,17 @@ describe("Poly or Const?", () => {
     });
 });
 
+//describe("Quadratic", () => {
+//    it("performs the quadratic equation", () => {
+//	expect(polynomial.testQuadratic()).toEqual('The roots are: -3, -2');
+ //   });
+//});
 
+describe("ExpSplit", () => {
+    it("splits the exponents", () => {
+  	expect(polynomial.testExpsplit()).toEqual('The exponents are: 3,2,1');
+    });
+});
 
 
 

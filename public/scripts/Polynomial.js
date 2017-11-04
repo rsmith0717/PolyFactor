@@ -572,3 +572,21 @@ exports.factorPolynomial = function() {
     console.log(polynomial1.constants.toString());    
     return 'The polynomials are: ' + polynomial1.polynomials.toString() + ' The constant is: ' + polynomial1.constants.toString();
   }
+   exports.testExpsplit = function() {
+    polynomial1 = new Polynomial('x^3-2x^2-x-20','');
+    //console.log(polynomial1.syntheticdivision());
+    polynomial1.termsplit();
+    polynomial1.addOnes();
+    polynomial1.polyorconst();
+    polynomial1.expsplit();
+    return 'The exponents are: ' + polynomial1.expsplit();
+     
+//   exports.testQuadratic = function() {
+//     polynomial1 = new Polynomial('x^2+5x+6', '');
+//     polynomial1.termsplit();
+//    polynomial1.addOnes();
+//    polynomial1.polyorconst();
+//    polynomial1.quadratic();
+//    console.log(polynomial1.finalString);
+  }  
+ 
