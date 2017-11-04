@@ -49,12 +49,18 @@ button.onclick = function () {
     synthetic(pZero, dividends, finalString);
 } **/
 
+var poly = require('./Polynomial.js');
+
+window.test = poly;
+
+
 $( document ).ready(function() {
     let button = document.getElementById('submit');
     
     button.addEventListener('click', () => {
         var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
-        polynomial1 = new Polynomial(polynomial,'');
+        polynomial.replace(" ", "");        
+        var polynomial1 = new poly.Polynomial(polynomial,'');
         //console.log(Math.sqrt(304));
         polynomial1.syntheticdivision();
         var test = ('1x^3');
