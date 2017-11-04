@@ -572,12 +572,18 @@ exports.factorPolynomial = function() {
     console.log(polynomial1.constants.toString());    
     return 'The polynomials are: ' + polynomial1.polynomials.toString() + ' The constant is: ' + polynomial1.constants.toString();
   }
+<<<<<<< HEAD
    exports.testExpsplit = function() {
+=======
+
+  exports.testPolyorConst = function() {
+>>>>>>> 2702bf7a9917597772ca3eb32ce1811a48d3baa7
     polynomial1 = new Polynomial('x^3-2x^2-x-20','');
     //console.log(polynomial1.syntheticdivision());
     polynomial1.termsplit();
     polynomial1.addOnes();
     polynomial1.polyorconst();
+<<<<<<< HEAD
     polynomial1.expsplit();
     return 'The exponents are: ' + polynomial1.expsplit();
      
@@ -590,3 +596,21 @@ exports.factorPolynomial = function() {
 //    console.log(polynomial1.finalString);
   }  
  
+=======
+    console.log(polynomial1.polynomials.toString());
+    console.log(polynomial1.constants.toString());    
+    return 'The polynomials are: ' + polynomial1.polynomials.toString() + ' The constant is: ' + polynomial1.constants.toString();
+  }
+  exports.testBubbleSort = function() {
+    polynomial1 = new Polynomial('-2x^2-x+x^3-20','');
+    //console.log(polynomial1.syntheticdivision());
+    polynomial1.termsplit();
+    polynomial1.addOnes();
+    polynomial1.polyorconst();
+
+    polynomial1.sortpolysresults = polynomial1.expsplit();
+    console.log(polynomial1.polynomials.toString());
+    polynomial1.bubbleSort(polynomial1.sortpolysresults, polynomial1.polynomials);  
+    return polynomial1.polynomials.toString();
+  }
+>>>>>>> 2702bf7a9917597772ca3eb32ce1811a48d3baa7

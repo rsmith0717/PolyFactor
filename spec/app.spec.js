@@ -26,7 +26,11 @@ describe("Term Split", () => {
 });
 
 describe("Test Add Ones", () => {
+<<<<<<< HEAD
     it("Adds ones to the polynomial", () => {
+=======
+    it("splits the polynomial into individual terms", () => {
+>>>>>>> 2702bf7a9917597772ca3eb32ce1811a48d3baa7
         expect(polynomial.testAddOnes()).toEqual('1x^3,-2x^2,-1x,-20');
     });
 });
@@ -37,6 +41,7 @@ describe("Poly or Const?", () => {
     });
 });
 
+<<<<<<< HEAD
 //describe("Quadratic", () => {
 //    it("performs the quadratic equation", () => {
 //	expect(polynomial.testQuadratic()).toEqual('The roots are: -3, -2');
@@ -49,5 +54,12 @@ describe("ExpSplit", () => {
     });
 });
 
+=======
+describe("Bubble Sort", () => {
+    it("Sorts the polynomial terms by power", () => {
+        expect(polynomial.testBubbleSort()).toEqual('+1x^3,-2x^2,-1x');
+    });
+});
+>>>>>>> 2702bf7a9917597772ca3eb32ce1811a48d3baa7
 
 
