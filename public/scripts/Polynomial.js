@@ -575,6 +575,9 @@ exports.factorPolynomial = function() {
 
    exports.testExpsplit = function() {
     polynomial1 = new Polynomial('x^3-2x^2-x-20','');
+    polynomial1.termsplit();
+    polynomial1.addOnes();
+    polynomial1.polyorconst();
     polynomial1.expsplit();
     return 'The exponents are: ' + polynomial1.expsplit();
  }    
@@ -590,4 +593,15 @@ exports.factorPolynomial = function() {
     console.log(polynomial1.polynomials.toString());
     polynomial1.bubbleSort(polynomial1.sortpolysresults, polynomial1.polynomials);  
     return polynomial1.polynomials.toString();
+  }
+
+  exports.testQuadratic = function() {
+    polynomial1 = new Polynomial('x^2+3x-4','');
+    polynomial1.termsplit(); // is currently removing the added ones for some reason
+    polynomial1.addOnes();
+
+    polynomial1.polyorconst();
+    polynomial1.sortpolysresults = polynomial1.expsplit();
+    polynomial1.bubbleSort(polynomial1.sortpolysresults, polynomial1.polynomials);
+    return polynomial1.quadratic();
   }
