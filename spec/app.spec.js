@@ -25,7 +25,7 @@ describe("Term Split", () => {
     });
 });
 
-describe("Term Split", () => {
+describe("Test Add Ones", () => {
     it("splits the polynomial into individual terms", () => {
         expect(polynomial.testAddOnes()).toEqual('1x^3,-2x^2,-1x,-20');
     });
@@ -37,7 +37,10 @@ describe("Poly or Const?", () => {
     });
 });
 
-
-
+describe("Bubble Sort", () => {
+    it("Sorts the polynomial terms by power", () => {
+        expect(polynomial.testBubbleSort()).toEqual('+1x^3,-2x^2,-1x');
+    });
+});
 
 
