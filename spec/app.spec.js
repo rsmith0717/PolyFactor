@@ -31,6 +31,13 @@ describe("Term Split", () => {
     });
 });
 
+describe("Poly or Const?", () => {
+    it("Puts the terms with variables in a separate array from the constant term", () => {
+        expect(polynomial.testPolyorConst()).toEqual('The polynomials are: '+'1x^3,-2x^2,-1x '+ 'The constant is: ' + '-20');
+    });
+});
+
+
 
 
 

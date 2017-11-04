@@ -561,3 +561,14 @@ exports.factorPolynomial = function() {
     polynomial1.addOnes();
     return polynomial1.arr.toString();
   }
+
+  exports.testPolyorConst = function() {
+    polynomial1 = new Polynomial('x^3-2x^2-x-20','');
+    //console.log(polynomial1.syntheticdivision());
+    polynomial1.termsplit();
+    polynomial1.addOnes();
+    polynomial1.polyorconst();
+    console.log(polynomial1.polynomials.toString());
+    console.log(polynomial1.constants.toString());    
+    return 'The polynomials are: ' + polynomial1.polynomials.toString() + ' The constant is: ' + polynomial1.constants.toString();
+  }
