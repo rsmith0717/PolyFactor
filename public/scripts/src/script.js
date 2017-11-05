@@ -62,16 +62,17 @@ $( document ).ready(function() {
         polynomial.replace(" ", "");        
         var polynomial1 = new poly.Polynomial(polynomial,'');
         //console.log(Math.sqrt(304));
-        polynomial1.syntheticdivision();
-        var test = ('1x^3');
-        var pass = 3;
-        test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        console.log(test);
-        if (test.search('^' + (pass).toString())) {
-           console.log(test.split('x')[0]);
+        /** 
+        try {
+            polynomial1.syntheticdivision();
         }
-
+        catch(err) {
+            alert("Please enter a proper polynomial.");
+        }
         //polynomial2 = new Polynomial('2x^2-5x-3','');
         //polynomial2.syntheticdivision();
+
+        **/
+        polynomial1.syntheticdivision();
     });
 });

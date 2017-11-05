@@ -133,17 +133,17 @@ $(document).ready(function () {
         polynomial.replace(" ", "");
         var polynomial1 = new poly.Polynomial(polynomial, '');
         //console.log(Math.sqrt(304));
-        polynomial1.syntheticdivision();
-        var test = '1x^3';
-        var pass = 3;
-        test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        console.log(test);
-        if (test.search('^' + pass.toString())) {
-            console.log(test.split('x')[0]);
+        /** 
+        try {
+            polynomial1.syntheticdivision();
         }
-
+        catch(err) {
+            alert("Please enter a proper polynomial.");
+        }
         //polynomial2 = new Polynomial('2x^2-5x-3','');
         //polynomial2.syntheticdivision();
+          **/
+        polynomial1.syntheticdivision();
     });
 });
 
@@ -608,10 +608,10 @@ var Polynomial = exports.Polynomial = function () {
 function rejoin(partsofpoly) {
     var newequation = '';
     console.log(partsofpoly.length);
-    for (x = 0; x < partsofpoly.length; x++) {
-        current = partsofpoly[x];
+    for (var x = 0; x < partsofpoly.length; x++) {
+        var current = partsofpoly[x];
         if (x + 1 < partsofpoly.length) {
-            next = partsofpoly[x + 1];
+            var next = partsofpoly[x + 1];
             console.log(next);
             if (next.charAt(0) == '-') {
                 newequation = newequation + current;
@@ -658,7 +658,7 @@ function descartes(polynomial) {
             poly = chng + poly;
         }
 
-    for (t = 0; t < poly.length; t++) // Adds understood ^1 to x
+    for (var t = 0; t < poly.length; t++) // Adds understood ^1 to x
     {
         if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
             var inc = poly.charAt(t + 1);
@@ -674,11 +674,11 @@ function descartes(polynomial) {
 
     function SignCount(poly) // Counts sign changes
     {
-        for (i = 0; i < poly.length; i++) {
+        for (var i = 0; i < poly.length; i++) {
             var x = poly.charAt(i);
             if (x == '-' || x == '+') {
                 var chg = x;
-                for (k = i + 1; k < poly.length; k++) {
+                for (var k = i + 1; k < poly.length; k++) {
                     var y = poly.charAt(k);
                     if (y == '-' || y == '+') {
                         if (y == '-' && y == chg) break;else if (y == '-' && y != chg) {
@@ -697,11 +697,11 @@ function descartes(polynomial) {
     function NegZero(poly) // Evaluates polynomial at f(-x) to see how many
     {
         // possible negative zeros
-        for (i = 0; i < poly.length; i++) {
+        for (var i = 0; i < poly.length; i++) {
             var chck = poly.charAt(i);
 
             if (poly.charAt(i) == '-') {
-                for (k = i; k < poly.length; k++) {
+                for (var k = i; k < poly.length; k++) {
                     if (poly.charAt(k) == '^') {
                         var num = poly.charAt(k + 1);
                         var tmp = evenOdd(num);
@@ -710,7 +710,7 @@ function descartes(polynomial) {
                 }
                 if (chck == '-' && tmp == 1) poly = setCharAt(poly, i, '+');
             } else if (poly.charAt(i) == '+') {
-                for (j = i; j < poly.length; j++) {
+                for (var j = i; j < poly.length; j++) {
                     if (poly.charAt(j) == '^') {
                         var num2 = poly.charAt(j + 1);
                         var tmp2 = evenOdd(num2);
