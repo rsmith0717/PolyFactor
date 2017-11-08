@@ -20,34 +20,37 @@
         <!-- /.container-fluid -->
     </nav>
 
-    <h1> Enter Your Polynomial </h1> <br />
-    <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
-            <div class="input-group">
-                <input type="text" id="inputbox" class="form-control" placeholder="2x^3 + 6x^2 - 9x + 18">
-                <span class="input-group-btn">
-                <button class="btn btn-secondary" id="submit" type="button">Go!</button>
-              </span>
+    <div class="container-fluid">
+        <h1> Enter Your Polynomial </h1>
+        <br />
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <div class="input-group">
+                    <input type="text" id="inputbox" class="form-control" placeholder="2x^3 + 6x^2 - 9x + 18">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" id="submit" type="button">Go!</button>
+                    </span>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                Steps</h3>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Steps</h3>
+            </div>
+            <ul id="steplist" class="list-group">
+
+            </ul>
         </div>
-        <ul id="steplist" class="list-group">
-
-        </ul>
     </div>
 
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 <script src="scripts/dist/bundle.js"></script>
 
 <!--
@@ -58,4 +61,5 @@ crossorigin="anonymous"></script>
 <script src="scripts/Polynomial.js"></script>
 <script src="scripts/script.js"></script>
 -->
+
 </html>
