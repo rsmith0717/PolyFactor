@@ -1,11 +1,18 @@
+
 body {
-    background: cornflowerblue;
+  background-image: ("chalkboard.jpg");
+	background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url("../img/chalkboard.jpg");
 }
 
 h1 {
     text-align: center;
     padding-bottom: 10px;
 }
+
+li { background: #E8DAEF; }
+li:nth-child(odd).list-group-item { background: #D1F2EB; }
 
 .input-group {
     text-align: center;

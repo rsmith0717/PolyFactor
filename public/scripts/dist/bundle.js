@@ -641,7 +641,7 @@ var Polynomial = exports.Polynomial = function () {
 function printSteps(steps) {
     steps.forEach(function (step) {
         // seperates the constant from the terms containing variables
-        $('#steplist').append('<li class="panel list-group-item">' + step + '</li>');
+        $('#steplist').append('<li class="list-group-item">' + step + '</li>');
     });
 }
 
