@@ -25,6 +25,9 @@ export class Polynomial {
     syntheticdivision() {
         console.log('The polynomial is: ' + this.polynomial);
         this.steps.push(this.polynomial)
+        if(hasNumbers(this.polynomial) == false) {
+            throw 'InvalidPolynomial'; //throw keyword is used here            
+        }
         //this.addOnes(); // adds ones
         this.termsplit(); // is currently removing the added ones for some reason
         this.addOnes();
@@ -37,7 +40,7 @@ export class Polynomial {
         this.sortpolysresults = this.expsplit();
         console.log(this.sortpolysresults.toString());
         this.bubbleSort(this.sortpolysresults, this.polynomials);
-        console.log(this.sortpolysresults.toString());   
+        console.log(this.sortpolysresults.toString());
         if (this.sortpolysresults[0] > 2) { // checks if the first term's exponent is greater than ^2
             this.steps.push("The exponent of the leading term is greater than two so we do synthetic division.");
             console.log(this.sortpolysresults.toString());
@@ -55,11 +58,11 @@ export class Polynomial {
             printSteps(this.steps);
             poly2.syntheticdivision();
         } else { // quadratic needs to take place when the first term's exponent is ^2
-            this.steps.push("The exponent of the leading term is less than two so we do the quadratic equation.");        
+            this.steps.push("The exponent of the leading term is less than two so we do the quadratic equation.");
             this.quadratic();
-            printSteps(this.steps);            
+            printSteps(this.steps);
         }
-        
+
     }
 
     addOnes() {
@@ -93,6 +96,9 @@ export class Polynomial {
         console.log(b);
         var c = parseInt(this.dividends[0]);
         console.log(c);
+        if(isNaN(a) == true || isNaN(b) == true || isNaN(c) == true) {
+            throw 'InvalidPolynomial';
+        }
         var testpos = ((b * b) + ((-4 * a) * c));
         console.log("The root test gives me this: " + testpos);
         var posroot = Math.sqrt(testpos);
@@ -179,7 +185,7 @@ export class Polynomial {
         this.steps.push("The constants are: " + constants.toString());
         this.polynomials = polynomials;
         this.steps.push("The polynomials are: " + polynomials.toString());
-        
+
     }
 
     expsplit() { // need to add zeores between powers
@@ -269,11 +275,11 @@ export class Polynomial {
                 results.push(this.polynomials[x].split('x')[0]);
                 console.log(this.polynomials[x].split('x')[0]);
             } **/
-           /** else if (x > 0 && !this.polynomials[x].includes('^' + (pass.toString()))) {
-                console.log('This didnt work out. ' + this.polynomials[x]);
-                console.log('^' + (pass).toString())
-                results.push('0')
-            } **/
+            /** else if (x > 0 && !this.polynomials[x].includes('^' + (pass.toString()))) {
+                 console.log('This didnt work out. ' + this.polynomials[x]);
+                 console.log('^' + (pass).toString())
+                 results.push('0')
+             } **/
         }
         results.unshift(this.constants);
         console.log(results.toString())
@@ -368,7 +374,7 @@ export class Polynomial {
     }
 
     actualZero() {
-       var length = this.dividends.length;
+        var length = this.dividends.length;
         console.log(this.pZero);
         console.log('Testing the dividends: ' + this.dividends.toString());
         var results = [];
@@ -415,7 +421,7 @@ export class Polynomial {
 
 export function printSteps(steps) {
     steps.forEach(function (step) { // seperates the constant from the terms containing variables
-        $('#steplist').append('<li>'+step+'</li>');        
+        $('#steplist').append('<li>' + step + '</li>');
     });
 }
 
@@ -441,6 +447,11 @@ export function rejoin(partsofpoly) {
     return partsofpoly;
 }
 
+function hasNumbers(t) {
+    var regex = /\d/g;
+    return regex.test(t);
+}
+
 export function concatexponents(results) {
     results.reverse();
     length = results.length - 1;
@@ -462,102 +473,102 @@ export function concatexponents(results) {
 }
 
 export function descartes(polynomial) {
-	var chngNum = 0;
-	var poly = polynomial.toString();
-	console.log("Polynomial: " + poly);
+    var chngNum = 0;
+    var poly = polynomial.toString();
+    console.log("Polynomial: " + poly);
 
-	if (poly.charAt(0) != '-' && poly.charAt(0) != '+') // Adds understood +
-	{
-		var chng = '+';
-		poly = chng + poly;
-	}
+    if (poly.charAt(0) != '-' && poly.charAt(0) != '+') // Adds understood +
+    {
+        var chng = '+';
+        poly = chng + poly;
+    }
 
-	for (var t = 0; t < poly.length; t++) // Adds understood ^1 to x
-	{
-		if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
-			var inc = poly.charAt(t + 1);
-			poly = setCharAt(poly, t + 1, '^1 ');
-		}
-	}
+    for (var t = 0; t < poly.length; t++) // Adds understood ^1 to x
+    {
+        if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
+            var inc = poly.charAt(t + 1);
+            poly = setCharAt(poly, t + 1, '^1 ');
+        }
+    }
 
-	SignCount(poly);
-	console.log("Possible max num of positive zeros: " + chngNum);
-	chngNum = 0;
-	NegZero(poly);
-	console.log("Possible max num of negative zeros: " + chngNum);
+    SignCount(poly);
+    console.log("Possible max num of positive zeros: " + chngNum);
+    chngNum = 0;
+    NegZero(poly);
+    console.log("Possible max num of negative zeros: " + chngNum);
 
-	function SignCount(poly) // Counts sign changes
-	{
-		for (var i = 0; i < poly.length; i++) {
-			var x = poly.charAt(i);
-			if (x == '-' || x == '+') {
-				var chg = x;
-				for (var k = i + 1; k < poly.length; k++) {
-					var y = poly.charAt(k);
-					if (y == '-' || y == '+') {
-						if (y == '-' && y == chg)
-							break;
-						else if (y == '-' && y != chg) {
-							chngNum++;
-							break;
-						} else if (y == '+' && y == chg)
-							break;
-						else if (y == '+' && y != chg) {
-							chngNum++;
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+    function SignCount(poly) // Counts sign changes
+    {
+        for (var i = 0; i < poly.length; i++) {
+            var x = poly.charAt(i);
+            if (x == '-' || x == '+') {
+                var chg = x;
+                for (var k = i + 1; k < poly.length; k++) {
+                    var y = poly.charAt(k);
+                    if (y == '-' || y == '+') {
+                        if (y == '-' && y == chg)
+                            break;
+                        else if (y == '-' && y != chg) {
+                            chngNum++;
+                            break;
+                        } else if (y == '+' && y == chg)
+                            break;
+                        else if (y == '+' && y != chg) {
+                            chngNum++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	function NegZero(poly) // Evaluates polynomial at f(-x) to see how many
-	{ // possible negative zeros
-		for (var i = 0; i < poly.length; i++) {
-			var chck = poly.charAt(i);
+    function NegZero(poly) // Evaluates polynomial at f(-x) to see how many
+    { // possible negative zeros
+        for (var i = 0; i < poly.length; i++) {
+            var chck = poly.charAt(i);
 
-			if (poly.charAt(i) == '-') {
-				for (var k = i; k < poly.length; k++) {
-					if (poly.charAt(k) == '^') {
-						var num = poly.charAt(k + 1);
-						var tmp = evenOdd(num);
-						break;
-					}
-				}
-				if (chck == '-' && tmp == 1)
-					poly = setCharAt(poly, i, '+');
-			} else if (poly.charAt(i) == '+') {
-				for (var j = i; j < poly.length; j++) {
-					if (poly.charAt(j) == '^') {
-						var num2 = poly.charAt(j + 1);
-						var tmp2 = evenOdd(num2);
-						if (chck == '+' && tmp2 == 1)
-							poly = setCharAt(poly, i, '-');
-						break;
-					}
-				}
-			}
-		}
-		console.log(poly);
-		SignCount(poly); // Sends altered polynomial to SignCount
-	}
+            if (poly.charAt(i) == '-') {
+                for (var k = i; k < poly.length; k++) {
+                    if (poly.charAt(k) == '^') {
+                        var num = poly.charAt(k + 1);
+                        var tmp = evenOdd(num);
+                        break;
+                    }
+                }
+                if (chck == '-' && tmp == 1)
+                    poly = setCharAt(poly, i, '+');
+            } else if (poly.charAt(i) == '+') {
+                for (var j = i; j < poly.length; j++) {
+                    if (poly.charAt(j) == '^') {
+                        var num2 = poly.charAt(j + 1);
+                        var tmp2 = evenOdd(num2);
+                        if (chck == '+' && tmp2 == 1)
+                            poly = setCharAt(poly, i, '-');
+                        break;
+                    }
+                }
+            }
+        }
+        console.log(poly);
+        SignCount(poly); // Sends altered polynomial to SignCount
+    }
 
-	function setCharAt(str, index, chr) // Function for changing specific character
-	{ // at specific index
-		if (index > str.length - 1)
-			return str;
-		return str.substr(0, index) + chr + str.substr(index + 1);
-	}
+    function setCharAt(str, index, chr) // Function for changing specific character
+    { // at specific index
+        if (index > str.length - 1)
+            return str;
+        return str.substr(0, index) + chr + str.substr(index + 1);
+    }
 
-	function evenOdd(num) {
-		return num % 2;
-	}
+    function evenOdd(num) {
+        return num % 2;
+    }
 }
 
 
 export function factorPolynomial() {
-    polynomial1 = new Polynomial('3x^3-2x^2-61x-20','');
+    polynomial1 = new Polynomial('3x^3-2x^2-61x-20', '');
     console.log(polynomial1.syntheticdivision());
     return polynomial1.syntheticdivision();
-  }
+}

@@ -129,10 +129,21 @@ $(document).ready(function () {
     var button = document.getElementById('submit');
 
     button.addEventListener('click', function () {
-        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
+        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box
+        var splChars = "*|,\":<>[]{}`\';()@&$#%";
+        for (var i = 0; i < polynomial.length; i++) {
+            if (splChars.indexOf(polynomial.charAt(i)) != -1) {
+                alert("Illegal characters used, please enter proper polynomial.");
+                throw "Illegal Characters";
+            }
+        }
         polynomial.replace(" ", "");
         var polynomial1 = new poly.Polynomial(polynomial, '');
-        polynomial1.syntheticdivision();
+        try {
+            polynomial1.syntheticdivision();
+        } catch (err) {
+            alert("Please enter a proper polynomial!");
+        }
     });
 });
 
@@ -187,6 +198,9 @@ var Polynomial = exports.Polynomial = function () {
         value: function syntheticdivision() {
             console.log('The polynomial is: ' + this.polynomial);
             this.steps.push(this.polynomial);
+            if (hasNumbers(this.polynomial) == false) {
+                throw 'InvalidPolynomial'; //throw keyword is used here            
+            }
             //this.addOnes(); // adds ones
             this.termsplit(); // is currently removing the added ones for some reason
             this.addOnes();
@@ -258,6 +272,9 @@ var Polynomial = exports.Polynomial = function () {
             console.log(b);
             var c = parseInt(this.dividends[0]);
             console.log(c);
+            if (isNaN(a) == true || isNaN(b) == true || isNaN(c) == true) {
+                throw 'InvalidPolynomial';
+            }
             var testpos = b * b + -4 * a * c;
             console.log("The root test gives me this: " + testpos);
             var posroot = Math.sqrt(testpos);
@@ -629,6 +646,11 @@ function rejoin(partsofpoly) {
     partsofpoly = newequation;
     console.log('The new equation is: ' + partsofpoly);
     return partsofpoly;
+}
+
+function hasNumbers(t) {
+    var regex = /\d/g;
+    return regex.test(t);
 }
 
 function concatexponents(results) {
