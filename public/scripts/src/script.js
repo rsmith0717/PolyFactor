@@ -54,24 +54,24 @@ var poly = require('./Polynomial.js');
 window.test = poly;
 
 
-$( document ).ready(function() {
+$(document).ready(function () {
     let button = document.getElementById('submit');
-    
-    button.addEventListener('click', () => {
-        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
-        polynomial.replace(" ", "");        
-        var polynomial1 = new poly.Polynomial(polynomial,'');
-        //console.log(Math.sqrt(304));
-        polynomial1.syntheticdivision();
-        var test = ('1x^3');
-        var pass = 3;
-        test.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        console.log(test);
-        if (test.search('^' + (pass).toString())) {
-           console.log(test.split('x')[0]);
-        }
 
-        //polynomial2 = new Polynomial('2x^2-5x-3','');
-        //polynomial2.syntheticdivision();
+    button.addEventListener('click', () => {
+        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box
+        var splChars = "*|,\":<>[]{}`\';()@&$#%";
+        for (var i = 0; i < polynomial.length; i++) {
+            if (splChars.indexOf(polynomial.charAt(i)) != -1) {
+                alert("Illegal characters used, please enter proper polynomial.");                
+                throw "Illegal Characters";
+            }
+        }
+        polynomial.replace(" ", "");
+        var polynomial1 = new poly.Polynomial(polynomial, '');
+        try {
+            polynomial1.syntheticdivision();
+        } catch (err) {
+            alert("Please enter a proper polynomial!");
+        }
     });
 });

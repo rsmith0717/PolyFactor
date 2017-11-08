@@ -9,7 +9,7 @@ function descartes(polynomial) {
 		poly = chng + poly;
 	}
 
-	for (t = 0; t < poly.length; t++) // Adds understood ^1 to x
+	for (var t = 0; t < poly.length; t++) // Adds understood ^1 to x
 	{
 		if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
 			var inc = poly.charAt(t + 1);
