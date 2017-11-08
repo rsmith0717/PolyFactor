@@ -132,17 +132,6 @@ $(document).ready(function () {
         var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
         polynomial.replace(" ", "");
         var polynomial1 = new poly.Polynomial(polynomial, '');
-        //console.log(Math.sqrt(304));
-        /** 
-        try {
-            polynomial1.syntheticdivision();
-        }
-        catch(err) {
-            alert("Please enter a proper polynomial.");
-        }
-        //polynomial2 = new Polynomial('2x^2-5x-3','');
-        //polynomial2.syntheticdivision();
-          **/
         polynomial1.syntheticdivision();
     });
 });
@@ -160,6 +149,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.printSteps = printSteps;
 exports.rejoin = rejoin;
 exports.concatexponents = concatexponents;
 exports.descartes = descartes;
@@ -189,12 +179,14 @@ var Polynomial = exports.Polynomial = function () {
         this.actZero = 0;
         this.dividends = [];
         this.finalString = finaloutput;
+        this.steps = [];
     }
 
     _createClass(Polynomial, [{
         key: 'syntheticdivision',
         value: function syntheticdivision() {
             console.log('The polynomial is: ' + this.polynomial);
+            this.steps.push(this.polynomial);
             //this.addOnes(); // adds ones
             this.termsplit(); // is currently removing the added ones for some reason
             this.addOnes();
@@ -210,6 +202,7 @@ var Polynomial = exports.Polynomial = function () {
             console.log(this.sortpolysresults.toString());
             if (this.sortpolysresults[0] > 2) {
                 // checks if the first term's exponent is greater than ^2
+                this.steps.push("The exponent of the leading term is greater than two so we do synthetic division.");
                 console.log(this.sortpolysresults.toString());
                 console.log(this.polynomials.toString());
                 descartes(this.tempoly);
@@ -222,10 +215,13 @@ var Polynomial = exports.Polynomial = function () {
                 var next = this.synthetic();
                 var pass = rejoin(next);
                 var poly2 = new Polynomial(pass, this.finalString);
+                printSteps(this.steps);
                 poly2.syntheticdivision();
             } else {
                 // quadratic needs to take place when the first term's exponent is ^2
+                this.steps.push("The exponent of the leading term is less than two so we do the quadratic equation.");
                 this.quadratic();
+                printSteps(this.steps);
             }
         }
     }, {
@@ -301,7 +297,9 @@ var Polynomial = exports.Polynomial = function () {
         key: 'termsplit',
         value: function termsplit() {
             this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
-            console.log("The array of split terms is: " + this.arr.toString());
+            var string = "The array of split terms is: " + this.arr.toString();
+            console.log(string);
+            this.steps.push(string);
         }
     }, {
         key: 'bubbleSort',
@@ -347,7 +345,9 @@ var Polynomial = exports.Polynomial = function () {
                 constants.push('0');
             }
             this.constants = constants;
+            this.steps.push("The constants are: " + constants.toString());
             this.polynomials = polynomials;
+            this.steps.push("The polynomials are: " + polynomials.toString());
         }
     }, {
         key: 'expsplit',
@@ -364,6 +364,7 @@ var Polynomial = exports.Polynomial = function () {
                 }
                 results.push(power);
             });
+            this.steps.push("The exponents of the polynomial terms are: " + results.toString());
             return results;
         }
     }, {
@@ -600,6 +601,13 @@ var Polynomial = exports.Polynomial = function () {
 
     return Polynomial;
 }();
+
+function printSteps(steps) {
+    steps.forEach(function (step) {
+        // seperates the constant from the terms containing variables
+        $('#steplist').append('<li>' + step + '</li>');
+    });
+}
 
 function rejoin(partsofpoly) {
     var newequation = '';

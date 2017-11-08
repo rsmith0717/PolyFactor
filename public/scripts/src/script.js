@@ -61,18 +61,6 @@ $( document ).ready(function() {
         var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
         polynomial.replace(" ", "");        
         var polynomial1 = new poly.Polynomial(polynomial,'');
-        //console.log(Math.sqrt(304));
-        /** 
-        try {
-            polynomial1.syntheticdivision();
-        }
-        catch(err) {
-            alert("Please enter a proper polynomial.");
-        }
-        //polynomial2 = new Polynomial('2x^2-5x-3','');
-        //polynomial2.syntheticdivision();
-
-        **/
         polynomial1.syntheticdivision();
     });
 });

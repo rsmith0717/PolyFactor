@@ -19,10 +19,12 @@ export class Polynomial {
         this.actZero = 0;
         this.dividends = [];
         this.finalString = finaloutput;
+        this.steps = [];
     }
 
     syntheticdivision() {
         console.log('The polynomial is: ' + this.polynomial);
+        this.steps.push(this.polynomial)
         //this.addOnes(); // adds ones
         this.termsplit(); // is currently removing the added ones for some reason
         this.addOnes();
@@ -37,6 +39,7 @@ export class Polynomial {
         this.bubbleSort(this.sortpolysresults, this.polynomials);
         console.log(this.sortpolysresults.toString());   
         if (this.sortpolysresults[0] > 2) { // checks if the first term's exponent is greater than ^2
+            this.steps.push("The exponent of the leading term is greater than two so we do synthetic division.");
             console.log(this.sortpolysresults.toString());
             console.log(this.polynomials.toString());
             descartes(this.tempoly);
@@ -49,9 +52,12 @@ export class Polynomial {
             var next = this.synthetic();
             var pass = rejoin(next);
             let poly2 = new Polynomial(pass, this.finalString);
+            printSteps(this.steps);
             poly2.syntheticdivision();
         } else { // quadratic needs to take place when the first term's exponent is ^2
+            this.steps.push("The exponent of the leading term is less than two so we do the quadratic equation.");        
             this.quadratic();
+            printSteps(this.steps);            
         }
         
     }
@@ -126,7 +132,9 @@ export class Polynomial {
 
     termsplit() {
         this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
-        console.log("The array of split terms is: " + this.arr.toString());
+        var string = "The array of split terms is: " + this.arr.toString()
+        console.log(string);
+        this.steps.push(string);
     }
 
     bubbleSort(items, actual) {
@@ -168,7 +176,10 @@ export class Polynomial {
             constants.push('0');
         }
         this.constants = constants;
+        this.steps.push("The constants are: " + constants.toString());
         this.polynomials = polynomials;
+        this.steps.push("The polynomials are: " + polynomials.toString());
+        
     }
 
     expsplit() { // need to add zeores between powers
@@ -182,6 +193,7 @@ export class Polynomial {
             }
             results.push(power);
         })
+        this.steps.push("The exponents of the polynomial terms are: " + results.toString());
         return results;
     }
 
@@ -398,6 +410,13 @@ export class Polynomial {
         }
     }
 
+}
+
+
+export function printSteps(steps) {
+    steps.forEach(function (step) { // seperates the constant from the terms containing variables
+        $('#steplist').append('<li>'+step+'</li>');        
+    });
 }
 
 export function rejoin(partsofpoly) {
