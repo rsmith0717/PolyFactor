@@ -181,11 +181,13 @@ export class Polynomial {
         if (constants === undefined || constants.length == 0) {
             constants.push('0');
         }
-        var sum = 0;
-        constants.forEach(function (value) {
-            sum += parseInt(value);
-        }, this);
-        this.constants = sum;
+        var sum = 0;        
+        constants.forEach(function (term) {
+            console.log("The term is: " + term);
+            sum += parseInt(term);            
+        });
+        this.steps.push("The sum is: " + sum.toString());        
+        this.constants.push(sum);
         this.steps.push("The constants are: " + this.constants.toString());
         this.polynomials = polynomials;
         this.steps.push("The polynomials are: " + this.polynomials.toString());
