@@ -223,11 +223,9 @@ var Polynomial = exports.Polynomial = function () {
                 var pass = rejoin(next);
                 var poly2 = new Polynomial(pass, this.finalString);
                 poly2.syntheticdivision();
-                return poly2.syntheticdivision();
             } else {
                 // quadratic needs to take place when the first term's exponent is ^2
-                //this.quadratic();
-                return this.quadratic();
+                this.quadratic();
             }
         }
     }, {
@@ -298,8 +296,6 @@ var Polynomial = exports.Polynomial = function () {
             }
             this.finalString = this.finalString + firstx + secx;
             console.log(this.finalString);
-
-            return this.finalString;
         }
     }, {
         key: 'termsplit',

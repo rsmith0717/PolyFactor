@@ -50,10 +50,8 @@ export class Polynomial {
             var pass = rejoin(next);
             let poly2 = new Polynomial(pass, this.finalString);
             poly2.syntheticdivision();
-            return poly2.syntheticdivision()
         } else { // quadratic needs to take place when the first term's exponent is ^2
-            //this.quadratic();
-            return this.quadratic();
+            this.quadratic();
         }
         
     }
@@ -123,9 +121,6 @@ export class Polynomial {
         }
         this.finalString = this.finalString + firstx + secx;
         console.log(this.finalString);
-
-        return this.finalString;
-
     }
 
 
