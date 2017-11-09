@@ -228,6 +228,7 @@ var Polynomial = exports.Polynomial = function () {
                 //this.dividends = cosplit();
                 var next = this.synthetic();
                 var pass = rejoin(next);
+                this.steps.push("The polynomial is currently: " + pass + this.finalString);
                 var poly2 = new Polynomial(pass, this.finalString);
                 printSteps(this.steps);
                 poly2.syntheticdivision();
@@ -308,6 +309,8 @@ var Polynomial = exports.Polynomial = function () {
                 secx = secx + '(x + ' + negx.toString() + ')';
             }
             this.finalString = this.finalString + firstx + secx;
+            this.steps.push("The factored polynomial is: " + this.finalString);
+
             console.log(this.finalString);
         }
     }, {
@@ -316,7 +319,6 @@ var Polynomial = exports.Polynomial = function () {
             this.arr = this.polynomial.match(/(\+|\-)?[a-z0-9.^]+/gi); // splits polynomial into seperate terms
             var string = "The array of split terms is: " + this.arr.toString();
             console.log(string);
-            this.steps.push(string);
         }
     }, {
         key: 'bubbleSort',
@@ -362,13 +364,14 @@ var Polynomial = exports.Polynomial = function () {
                 constants.push('0');
             }
             var sum = 0;
-            constants.forEach(function (value) {
-                sum += parseInt(value);
-            }, this);
-            this.constants = sum;
-            this.steps.push("The constants are: " + this.constants.toString());
+            constants.forEach(function (term) {
+                console.log("The term is: " + term);
+                sum += parseInt(term);
+            });
+            this.constants.push(sum);
+            this.steps.push("The constant is: " + this.constants.toString());
             this.polynomials = polynomials;
-            this.steps.push("The polynomials are: " + this.polynomials.toString());
+            this.steps.push("The terms that contain variables are: " + this.polynomials.toString());
         }
     }, {
         key: 'expsplit',
@@ -396,7 +399,7 @@ var Polynomial = exports.Polynomial = function () {
             console.log(this.polynomials.toString());
             //console.log(polynomials[0]);
             var leadingterm = this.polynomials[0].split(/[a-zA-Z](.+)/)[0];
-            console.log('The leading polynomial term is: ' + leadingterm);
+            this.steps.push('The leading polynomial term is: ' + leadingterm);
             zerotest.push(leadingterm);
             if (this.constants[0] != null) {
                 zerotest.push(this.constants[0]);
@@ -412,21 +415,25 @@ var Polynomial = exports.Polynomial = function () {
             //console.log(zerotest[1]);    
             var factoree1 = parseInt(this.zerotest[0]); // the leading coefficient of greatest power polynomial
             var factoree2 = parseInt(this.zerotest[1]); // the constant
-            console.log(factoree1);
-            console.log(factoree2);
+            this.steps.push("The coefficient of the leading term of the polynomial is: " + factoree1);
+            this.steps.push("The constant term of the polynomial is: " + factoree2);
 
             if (Math.sign(factoree1) == 1) {
                 // loop for positive polynomial terms
                 for (var x = 0; x <= factoree1; x++) {
                     if (factoree1 % x == 0) {
+                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.")                    
                         this.polyfacts.push(x);
+                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");
                     }
                 }
             } else if (Math.sign(factoree1) == -1) {
                 // loop for factors of negative polynomial term
                 for (var x = factoree1; x <= 0; x++) {
                     if (factoree1 % x == 0) {
+                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                       
                         this.polyfacts.push(x);
+                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                    
                     }
                 }
             }
@@ -434,20 +441,24 @@ var Polynomial = exports.Polynomial = function () {
                 // loop for factors of positive constant term
                 for (var x = 0; x <= factoree2; x++) {
                     if (factoree2 % x == 0) {
+                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                                            
                         this.constfacts.push(x);
+                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                                        
                     }
                 }
             } else if (Math.sign(factoree2) == -1) {
                 // loop for factors of negative constant term
                 for (var x = factoree2; x <= 0; x++) {
                     if (factoree2 % x == 0) {
+                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                                                                
                         this.constfacts.push(x);
+                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                                                            
                     }
                 }
             }
 
-            console.log(this.polyfacts.toString()); // factors of the polynomial coefficient
-            console.log(this.constfacts.toString()); // factors of the constant
+            this.steps.push("The factors of the coefficent of the leading polynomial term are: " + this.polyfacts.toString()); // factors of the polynomial coefficient
+            this.steps.push("The factors of the polynomial's constant term are: " + this.constfacts.toString()); // factors of the constant
         }
     }, {
         key: 'cosplit',
@@ -551,6 +562,7 @@ var Polynomial = exports.Polynomial = function () {
             var result = 0;
             var negRes = 0;
             var res = [];
+            this.steps.push("The possible zeroes are eqaul to: coefficient factors & constant factors & (coefficient factors)/(constant factors)");
             if (this.constfacts.length > this.polyfacts.length) {
                 // find out which has more factors and use it as dividend
                 bigVar = this.constfacts.length;
@@ -572,6 +584,7 @@ var Polynomial = exports.Polynomial = function () {
                 }
             }
             console.log('printing', res.toString());
+            this.steps.push("The possible zeroes are: " + res.toString());
             this.pZeroes = res;
         }
     }, {
@@ -607,6 +620,8 @@ var Polynomial = exports.Polynomial = function () {
                         } else if (x == 0 && carry == 0) {
                             console.log('Ending search for actZero.');
                             this.actZero = this.pZero;
+                            this.steps.push("The zero for this polynomial is: " + this.actZero.toString());
+
                             foundZero = true;
                             break;
                         }
@@ -626,7 +641,7 @@ var Polynomial = exports.Polynomial = function () {
 function printSteps(steps) {
     steps.forEach(function (step) {
         // seperates the constant from the terms containing variables
-        $('#steplist').append('<li>' + step + '</li>');
+        $('#steplist').append('<li class="list-group-item">' + step + '</li>');
     });
 }
 
