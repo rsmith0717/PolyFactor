@@ -129,7 +129,8 @@ $(document).ready(function () {
     var button = document.getElementById('submit');
 
     button.addEventListener('click', function () {
-        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box
+        var polynomial = document.getElementById('inputbox').value; // gets text inside text-box;   
+        $('#steplist').empty();
         var splChars = "*|,\":<>[]{}`\';()@&$#%";
         for (var i = 0; i < polynomial.length; i++) {
             if (splChars.indexOf(polynomial.charAt(i)) != -1) {
