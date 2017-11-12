@@ -45,7 +45,7 @@ export class Polynomial {
             this.steps.push("The exponent of the leading term is greater than two so we do synthetic division.");
             console.log(this.sortpolysresults.toString());
             console.log(this.polynomials.toString());
-            descartes(this.tempoly);
+            descartes(this);
             this.zerotest = this.testTerms();
             this.getFactors();
             this.possibleZeros();
@@ -89,7 +89,8 @@ export class Polynomial {
     }
 
     quadratic() {
-        this.cosplit()
+        this.steps.push("The quadratic formula is: x = (-b" + decodeURI('%C2%B1') + ' sqrt(b^2-4ac))/(2a)'); 
+        this.cosplit();
         console.log(this.dividends.toString());
         var a = parseInt(this.dividends[2]);
         console.log(a);
@@ -97,6 +98,7 @@ export class Polynomial {
         console.log(b);
         var c = parseInt(this.dividends[0]);
         console.log(c);
+        this.steps.push("a is equal to : " + a + " b is equal to: " + b + " c is equal to: " + c);
         if(isNaN(a) == true || isNaN(b) == true || isNaN(c) == true) {
             throw 'InvalidPolynomial';
         }
@@ -109,8 +111,8 @@ export class Polynomial {
 
         var posx = ((-1 * b) + posroot) / (2 * a);
         var negx = ((-1 * b) + negroot) / (2 * a);
-        console.log(posx.toString());
-        console.log(negx.toString());
+        this.steps.push('The positive x is: ' + posx.toString());
+        this.steps.push('The negative x is: ' + negx.toString());
 
         var firstx = '';
         var secx = '';
@@ -189,7 +191,7 @@ export class Polynomial {
             sum += parseInt(term);            
         });
         this.constants.push(sum);
-        this.steps.push("The constant is: " + this.constants.toString());
+        this.steps.push("The constant term is: " + this.constants.toString());
         this.polynomials = polynomials;
         this.steps.push("The terms that contain variables are: " + this.polynomials.toString());
 
@@ -493,7 +495,7 @@ export function concatexponents(results) {
 
 export function descartes(polynomial) {
     var chngNum = 0;
-    var poly = polynomial.toString();
+    var poly = polynomial.polynomial.toString();
     console.log("Polynomial: " + poly);
 
     if (poly.charAt(0) != '-' && poly.charAt(0) != '+') // Adds understood +
