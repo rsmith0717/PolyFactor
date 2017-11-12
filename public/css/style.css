@@ -4,60 +4,61 @@ body {
       background-size: cover;
     background-attachment: fixed;
   }
-  
+
   a {
     background-color: #333;
     font-family: 'Luckiest Guy', cursive;
     font-size: 20px;
   }
-  
+
   .randyBody {
     background-image: ("../img/randy.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    padding-bottom: 5cm;
+    overflow: hidden;
+    min-height: 100%;
   }
-  
+
   path {
     fill: transparent;
   }
-  
+
   text {
     fill: #ccff15;
   }
-  
+
   .row {
     padding: .5cm;
     padding-left: .5cm;
   }
-  
+
   .panel-title {
     text-align: center;
   }
-  
-  
+
+
   h1 {
       font-family: "Comic Sans MS", cursive, sans-serif;
       text-align: center;
       padding-bottom: 10px;
   }
-  
+
   li {
     text-align: center;
     padding-top: 10px;
   }
-  
+
   li.list-group-item {
-  
+
     background: #E8DAEF;
   }
   li:nth-child(odd) { background: #D1F2EB; }
-  
+
   .input-group {
       text-align: center;
   }
-  
+
   .column {
       float: left;
       width: 75%;
