@@ -1,0 +1,30 @@
+{
+  "name": "polyfactor",
+  "version": "1.0.0",
+  "description": "webapp to factor polynomials using synthetic division and quadratic equation",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsmith0717/PolyFactor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rsmith0717/PolyFactor/issues"
+  },
+  "homepage": "https://github.com/rsmith0717/PolyFactor#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "jasmine": "^2.8.0",
+    "webpack": "^3.8.1"
+  }
+}
