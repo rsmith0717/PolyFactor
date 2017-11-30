@@ -24,7 +24,7 @@ export class Polynomial {
     syntheticdivision() {
         console.log('The polynomial is: ' + this.polynomial);
         this.steps.push(this.polynomial)
-        if(hasNumbers(this.polynomial) == false) {
+        if (hasNumbers(this.polynomial) == false) {
             throw 'InvalidPolynomial'; //throw keyword is used here            
         }
         this.termsplit(); // is currently removing the added ones for some reason
@@ -50,7 +50,7 @@ export class Polynomial {
             this.cosplit();
             var next = this.synthetic();
             var pass = rejoin(next);
-            this.steps.push("The polynomial is currently: " + pass + this.finalString);            
+            this.steps.push("The polynomial is currently: " + pass + this.finalString);
             let poly2 = new Polynomial(pass, this.finalString);
             printSteps(this.steps);
             poly2.syntheticdivision();
@@ -67,7 +67,7 @@ export class Polynomial {
             var tempoly = this.arr[z].match(/\S/g);
             for (var x = 0; x < tempoly.length; x++) {
                 var current = tempoly[x];
-                var prev = tempoly[x - 1];          
+                var prev = tempoly[x - 1];
                 if (current == 'x') {
                     var result = /^[^0-9]+$/g.test(prev);
                     if (result == true) {
@@ -80,7 +80,7 @@ export class Polynomial {
     }
 
     quadratic() {
-        this.steps.push("The quadratic formula is: x = (-b" + decodeURI('%C2%B1') + decodeURI('%E2%88%9A')+'(b^2-4ac))/(2a)'); 
+        this.steps.push("The quadratic formula is: x = (-b" + decodeURI('%C2%B1') + decodeURI('%E2%88%9A') + '(b^2-4ac))/(2a)');
         this.cosplit();
         console.log(this.dividends.toString());
         var a = parseInt(this.dividends[2]);
@@ -90,7 +90,7 @@ export class Polynomial {
         var c = parseInt(this.dividends[0]);
         console.log(c);
         this.steps.push("a is equal to : " + a + " b is equal to: " + b + " c is equal to: " + c);
-        if(isNaN(a) == true || isNaN(b) == true || isNaN(c) == true) {
+        if (isNaN(a) == true || isNaN(b) == true || isNaN(c) == true) {
             throw 'InvalidPolynomial';
         }
         var testpos = ((b * b) + ((-4 * a) * c));
@@ -101,10 +101,10 @@ export class Polynomial {
         this.steps.push('The negative root is: ' + negroot.toString());
 
         var posx = ((-1 * b) + posroot) / (2 * a);
-        this.steps.push('The positive x is: (-'+ b +'+' + posroot + ')/(2*'+ a +') = ' + posx.toString());
-        
+        this.steps.push('The positive x is: (-' + b + '+' + posroot + ')/(2*' + a + ') = ' + posx.toString());
+
         var negx = ((-1 * b) + negroot) / (2 * a);
-        this.steps.push('The negative x is: (-'+ b + negroot + ')/(2*'+ a +') = ' + negx.toString());        
+        this.steps.push('The negative x is: (-' + b + negroot + ')/(2*' + a + ') = ' + negx.toString());
 
         var firstx = '';
         var secx = '';
@@ -127,8 +127,8 @@ export class Polynomial {
             secx = secx + '(x + ' + negx.toString() + ')';
         }
         this.finalString = this.finalString + firstx + secx;
-        this.steps.push("The factored polynomial is: " + this.finalString);            
-        
+        this.steps.push("The factored polynomial is: " + this.finalString);
+
         console.log(this.finalString);
     }
 
@@ -177,10 +177,10 @@ export class Polynomial {
         if (constants === undefined || constants.length == 0) {
             constants.push('0');
         }
-        var sum = 0;        
+        var sum = 0;
         constants.forEach(function (term) {
             console.log("The term is: " + term);
-            sum += parseInt(term);            
+            sum += parseInt(term);
         });
         this.constants.push(sum);
         this.steps.push("The constant term is: " + this.constants.toString());
@@ -208,7 +208,7 @@ export class Polynomial {
         var zerotest = [];
         console.log(this.polynomials.toString());
         this.steps.push('The leading polynomial term is: ' + this.polynomials[0]);
-        
+
         var leadingterm = this.polynomials[0].split(/[a-zA-Z](.+)/)[0];
         zerotest.push(leadingterm);
         if (this.constants[0] != null) {
@@ -268,7 +268,7 @@ export class Polynomial {
                 results.push(this.polynomials[x].split('x')[0]);
                 console.log(this.polynomials[x].split('x')[0]);
             }
-            
+
         }
         results.unshift(this.constants);
         console.log(results.toString())
@@ -341,7 +341,7 @@ export class Polynomial {
         var result = 0;
         var negRes = 0;
         var res = []
-        this.steps.push("The possible zeroes are eqaul to: coefficient factors & constant factors & (coefficient factors)/(constant factors)");                
+        this.steps.push("The possible zeroes are eqaul to: coefficient factors & constant factors & (coefficient factors)/(constant factors)");
         if (this.constfacts.length > this.polyfacts.length) { // find out which has more factors and use it as dividend
             bigVar = this.constfacts.length
             smallVar = this.polyfacts.length
@@ -351,7 +351,10 @@ export class Polynomial {
         }
         for (var y = 0; y < smallVar; y++) { // loop runs until smallest array is done
             for (var x = 0; x < bigVar; x++) { // loop runs through biggest array on each increment of first loop
-                result = this.constfacts[x] / this.polyfacts[y]
+                if (this.constfacts.length > this.polyfacts.length) // if the coefficient is bigger than constant, coefficient should be on top
+                    result = this.constfacts[x] / this.polyfacts[y];
+                else
+                    result = this.polyfacts[x] / this.constfacts[y];
                 console.log('Looking for this: ' + result);
                 res.push(math.fraction(result))
                 negRes = (result - (result * 2))
@@ -359,7 +362,7 @@ export class Polynomial {
             }
         }
         console.log('printing', res.toString())
-        this.steps.push("The possible zeroes are: " + res.toString());        
+        this.steps.push("The possible zeroes are: " + res.toString());
         this.pZeroes = res;
     }
 
@@ -391,8 +394,8 @@ export class Polynomial {
                     } else if (x == 0 && carry == 0) {
                         console.log('Ending search for actZero.');
                         this.actZero = this.pZero;
-                        this.steps.push("The zero for this polynomial is: " + this.actZero.toString());        
-                        
+                        this.steps.push("The zero for this polynomial is: " + this.actZero.toString());
+
                         foundZero = true;
                         break;
                     }
@@ -475,7 +478,7 @@ export function descartes(polynomial) {
     {
         if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
             var inc = poly.charAt(t + 1);
-            poly = setCharAt(poly, t + 1, '^1 ');
+            poly = setCharAt(poly, t + 1, '^1' + inc);
         }
     }
 

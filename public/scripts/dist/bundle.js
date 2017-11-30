@@ -500,7 +500,8 @@ var Polynomial = exports.Polynomial = function () {
                 // loop runs until smallest array is done
                 for (var x = 0; x < bigVar; x++) {
                     // loop runs through biggest array on each increment of first loop
-                    result = this.constfacts[x] / this.polyfacts[y];
+                    if (this.constfacts.length > this.polyfacts.length) // if the coefficient is bigger than constant, coefficient should be on top
+                        result = this.constfacts[x] / this.polyfacts[y];else result = this.polyfacts[x] / this.constfacts[y];
                     console.log('Looking for this: ' + result);
                     res.push(math.fraction(result));
                     negRes = result - result * 2;
@@ -627,7 +628,7 @@ function descartes(polynomial) {
     {
         if (poly.charAt(t) == 'x' && poly.charAt(t + 1) != '^') {
             var inc = poly.charAt(t + 1);
-            poly = setCharAt(poly, t + 1, '^1 ');
+            poly = setCharAt(poly, t + 1, '^1' + inc);
         }
     }
 
