@@ -72,54 +72,6 @@
 
 // 2x^3+4x^2-8x+16  4x^2-8x+16+2x^3 56x^2-24x+16+68x^3 3x^3-2x^2-61x-20
 // 3x^4-8x^3-37x^2+2x+40 2x^4+x^3-19x^2-9x+9
-/**var button = document.getElementById('submit');
-var polynomial = '';
-var tempoly = '';
-var arr = [];
-var polynomials = []
-var constants = []
-var sortpolysresults = []
-var zerotest = []
-var polyfacts = [];
-var constfacts = [];
-var pZero = 0;          // potential zero
-var dividends = [];
-var finalString = '';
-
-
-button.onclick = function () {
-    var polynomial = document.getElementById('inputbox').value; // gets text inside text-box 
-    let polynomial1 = new Polynomial(polynomial);
-    console.log(polynomial);
-    tempoly = polynomial;
-    var arr = termsplit(tempoly);
-
-    polyorconst(arr, constants, polynomials)
-
-    console.log(polynomials.toString());
-    console.log(constants.toString());    
-
-    expsplit(polynomials, sortpolysresults);
-    console.log(sortpolysresults.toString());
-
-    bubbleSort(sortpolysresults, polynomials); // sorts the powers in descending order and the corresponding term as well
-    console.log(polynomials.toString());
-
-    //descartes(polynomial); // evaluates the polynomial at f(x) and f(-x) to determine number of possible
-                        // positive and negative zeros
-    zerotest = testTerms(polynomials, constants);
-
-    getFactors(zerotest, polyfacts, constfacts) // finds factors of term with highest exponent and the constant term
-
-    pZero = possibleZeros(polyfacts, constfacts)
-
-   //gcf = GCF(polyfacts, constfacts); // finds the greatest common factor between the polynomial term and the constant term
-    //console.log(gcf);
-
-    dividends = cosplit(polynomials, constants); // give us the coefficients of the polynomial terms
-
-    synthetic(pZero, dividends, finalString);
-} **/
 
 var poly = __webpack_require__(1);
 
@@ -170,8 +122,6 @@ exports.factorPolynomial = factorPolynomial;
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var math = __webpack_require__(2);
-//var script = require('./script.js');
-
 
 var Polynomial = exports.Polynomial = function () {
     function Polynomial(equation, finaloutput) {
@@ -202,7 +152,6 @@ var Polynomial = exports.Polynomial = function () {
             if (hasNumbers(this.polynomial) == false) {
                 throw 'InvalidPolynomial'; //throw keyword is used here            
             }
-            //this.addOnes(); // adds ones
             this.termsplit(); // is currently removing the added ones for some reason
             this.addOnes();
             console.log('The split terms are: ' + this.arr.toString());
@@ -225,8 +174,6 @@ var Polynomial = exports.Polynomial = function () {
                 this.getFactors();
                 this.possibleZeros();
                 this.cosplit();
-                //this.pZero = this.possibleZeros();
-                //this.dividends = cosplit();
                 var next = this.synthetic();
                 var pass = rejoin(next);
                 this.steps.push("The polynomial is currently: " + pass + this.finalString);
@@ -245,28 +192,23 @@ var Polynomial = exports.Polynomial = function () {
         value: function addOnes() {
             for (var z = 0; z < this.arr.length; z++) {
                 var tempoly = this.arr[z].match(/\S/g);
-                //console.log('The chars of the polynomial are: ' + tempoly.toString());            
                 for (var x = 0; x < tempoly.length; x++) {
                     var current = tempoly[x];
                     var prev = tempoly[x - 1];
-                    //console.log('The current char is: ' + current);
-                    //console.log('The prev char is: ' + prev);                
                     if (current == 'x') {
                         var result = /^[^0-9]+$/g.test(prev);
-                        //console.log('The result of the regex is: ' + result);
                         if (result == true) {
                             tempoly.splice(x, 0, '1');
                         }
                     }
                 }
                 this.arr[z] = tempoly.join("");
-                //console.log(this.arr[z]);
             }
         }
     }, {
         key: 'quadratic',
         value: function quadratic() {
-            this.steps.push("The quadratic formula is: x = (-b" + decodeURI('%C2%B1') + ' sqrt(b^2-4ac))/(2a)');
+            this.steps.push("The quadratic formula is: x = (-b" + decodeURI('%C2%B1') + decodeURI('%E2%88%9A') + '(b^2-4ac))/(2a)');
             this.cosplit();
             console.log(this.dividends.toString());
             var a = parseInt(this.dividends[2]);
@@ -282,14 +224,15 @@ var Polynomial = exports.Polynomial = function () {
             var testpos = b * b + -4 * a * c;
             console.log("The root test gives me this: " + testpos);
             var posroot = Math.sqrt(testpos);
-            console.log('The posroot is: ' + posroot.toString());
+            this.steps.push('The positve root is: ' + posroot.toString());
             var negroot = -1 * Math.sqrt(testpos);
-            console.log('The negroot is: ' + negroot.toString());
+            this.steps.push('The negative root is: ' + negroot.toString());
 
             var posx = (-1 * b + posroot) / (2 * a);
+            this.steps.push('The positive x is: (-' + b + '+' + posroot + ')/(2*' + a + ') = ' + posx.toString());
+
             var negx = (-1 * b + negroot) / (2 * a);
-            this.steps.push('The positive x is: ' + posx.toString());
-            this.steps.push('The negative x is: ' + negx.toString());
+            this.steps.push('The negative x is: (-' + b + negroot + ')/(2*' + a + ') = ' + negx.toString());
 
             var firstx = '';
             var secx = '';
@@ -400,9 +343,9 @@ var Polynomial = exports.Polynomial = function () {
             // takes the leading term of the polynomials and the constant term to pass to the getFactors method
             var zerotest = [];
             console.log(this.polynomials.toString());
-            //console.log(polynomials[0]);
+            this.steps.push('The leading polynomial term is: ' + this.polynomials[0]);
+
             var leadingterm = this.polynomials[0].split(/[a-zA-Z](.+)/)[0];
-            this.steps.push('The leading polynomial term is: ' + leadingterm);
             zerotest.push(leadingterm);
             if (this.constants[0] != null) {
                 zerotest.push(this.constants[0]);
@@ -414,8 +357,6 @@ var Polynomial = exports.Polynomial = function () {
         key: 'getFactors',
         value: function getFactors() {
             // finds the common factors of the leading polynomial term and the constant term
-            // console.log(zerotest[0]);
-            //console.log(zerotest[1]);    
             var factoree1 = parseInt(this.zerotest[0]); // the leading coefficient of greatest power polynomial
             var factoree2 = parseInt(this.zerotest[1]); // the constant
             this.steps.push("The coefficient of the leading term of the polynomial is: " + factoree1);
@@ -425,18 +366,14 @@ var Polynomial = exports.Polynomial = function () {
                 // loop for positive polynomial terms
                 for (var x = 0; x <= factoree1; x++) {
                     if (factoree1 % x == 0) {
-                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.")                    
                         this.polyfacts.push(x);
-                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");
                     }
                 }
             } else if (Math.sign(factoree1) == -1) {
                 // loop for factors of negative polynomial term
                 for (var x = factoree1; x <= 0; x++) {
                     if (factoree1 % x == 0) {
-                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                       
                         this.polyfacts.push(x);
-                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                    
                     }
                 }
             }
@@ -444,18 +381,14 @@ var Polynomial = exports.Polynomial = function () {
                 // loop for factors of positive constant term
                 for (var x = 0; x <= factoree2; x++) {
                     if (factoree2 % x == 0) {
-                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                                            
                         this.constfacts.push(x);
-                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                                        
                     }
                 }
             } else if (Math.sign(factoree2) == -1) {
                 // loop for factors of negative constant term
                 for (var x = factoree2; x <= 0; x++) {
                     if (factoree2 % x == 0) {
-                        //this.steps.push(factoree1 +" % " + x + " is equal to zero.");                                                                                
                         this.constfacts.push(x);
-                        //this.steps.push("Therefore " + x + "is a factor of "+ "factoree1");                                                            
                     }
                 }
             }
@@ -476,20 +409,9 @@ var Polynomial = exports.Polynomial = function () {
                 this.polynomials[x].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 console.log(this.polynomials[x].toString());
                 if (x >= 0) {
-                    //results.push(this.polynomials[x]);
                     results.push(this.polynomials[x].split('x')[0]);
                     console.log(this.polynomials[x].split('x')[0]);
                 }
-                //else if ( x > 0 && this.polynomials[x].includes('^' + (pass).toString())) {
-                /**else if ( x > 0) {
-                    results.push(this.polynomials[x].split('x')[0]);
-                    console.log(this.polynomials[x].split('x')[0]);
-                } **/
-                /** else if (x > 0 && !this.polynomials[x].includes('^' + (pass.toString()))) {
-                     console.log('This didnt work out. ' + this.polynomials[x]);
-                     console.log('^' + (pass).toString())
-                     results.push('0')
-                 } **/
             }
             results.unshift(this.constants);
             console.log(results.toString());
@@ -505,11 +427,13 @@ var Polynomial = exports.Polynomial = function () {
             var results = [];
             this.dividends.forEach(function (element, i) {
                 element = parseInt(element);
-                //console.log(element);
                 dividends[i] = element;
             });
             this.dividends = dividends;
             this.actualZero();
+            if (this.actZero == 0) {
+                throw 'InvalidPolynomial'; //throw keyword is used here
+            }
             console.log('The divisor is: ' + this.actZero.toString());
             console.log('The dividends are: ' + this.dividends.toString());
             console.log(this.dividends.toString());
@@ -536,11 +460,9 @@ var Polynomial = exports.Polynomial = function () {
             var carry = 0;
 
             for (var x = length - 1; x >= 0; x--) {
-                //console.log('This is the ' + x + ' iteration of the loop');
                 if (x == length - 1) {
                     carry = this.dividends[x];
                     results.push(carry);
-                    //console.log('This is the ' + length + ' element')
                 } else {
                     console.log(carry);
                     carry = this.dividends[x] + carry * this.actZero;
@@ -583,7 +505,6 @@ var Polynomial = exports.Polynomial = function () {
                     res.push(math.fraction(result));
                     negRes = result - result * 2;
                     res.push(math.fraction(negRes));
-                    //console.log('push to new array: ', res[x])
                 }
             }
             console.log('printing', res.toString());
@@ -604,11 +525,9 @@ var Polynomial = exports.Polynomial = function () {
                 this.pZero = this.pZeroes[z];
                 console.log('Currently testing pZero: ' + this.pZero);
                 for (var x = length - 1; x >= 0; x--) {
-                    //console.log('This is the ' + x + ' iteration of the loop');
                     if (x == length - 1) {
                         carry = this.dividends[x];
                         results.push(carry);
-                        //console.log('This is the ' + length + ' element')
                     } else {
                         console.log('X is currently: ' + x);
                         console.log('Carry is at first: ' + carry);
@@ -619,7 +538,6 @@ var Polynomial = exports.Polynomial = function () {
                             console.log(carry);
                             results.push(carry);
                             console.log('Search continues.');
-                            //console.log('Pushing onto the stack ' + carry.toString())
                         } else if (x == 0 && carry == 0) {
                             console.log('Ending search for actZero.');
                             this.actZero = this.pZero;
@@ -680,7 +598,6 @@ function concatexponents(results) {
     length = results.length - 1;
     console.log(length);
     for (var x = length; x >= 0; x--) {
-        //console.log('This is the ' + x + ' iteration of the loop.');
         if (x > 1) {
             results[x] = results[x].toString() + 'x^' + x.toString();
             console.log('The concated term is: ' + results[x]);
@@ -715,10 +632,10 @@ function descartes(polynomial) {
     }
 
     SignCount(poly);
-    console.log("Possible max num of positive zeros: " + chngNum);
+    polynomial.steps.push("Possible max num of positive zeros: " + chngNum);
     chngNum = 0;
     NegZero(poly);
-    console.log("Possible max num of negative zeros: " + chngNum);
+    polynomial.steps.push("Possible max num of negative zeros: " + chngNum);
 
     function SignCount(poly) // Counts sign changes
     {
